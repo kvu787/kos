@@ -36,6 +36,19 @@ start:
 
 @ Write 0 to the UART forever
 print:
+	@ Poll until transmitter is idle and empty
+	@
+	@ TODO: out of curiosity, I'd like to verify that check_ready is actually
+	@ looping.
+	@ Based on the 700 MHz processor speed, we should be running "print" way
+	@ faster than the UART is able to process (see baudrate).
+	check_ready:
+		ldr r1, AUX_MU_LSR_REG
+		ldr r0, [r1]
+		and r0, r0, #0b01100000
+		teq r0, #0b01100000
+		bne check_ready
+	@ Write 0
 	mov r0, #0x30
 	ldr r1, AUX_MU_IO_REG
 	str r0, [r1]
@@ -55,3 +68,4 @@ AUX_MU_IER_REG: .word 0x20215044
 AUX_MU_IIR_REG: .word 0x20215048
 AUX_MU_LCR_REG: .word 0x2021504C
 AUX_MU_BAUD_REG: .word 0x20215068
+AUX_MU_LSR_REG: .word 0x20215054
