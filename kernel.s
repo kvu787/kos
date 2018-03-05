@@ -38,10 +38,11 @@ start:
 print:
 	@ Poll until transmitter is idle and empty
 	@
-	@ TODO: out of curiosity, I'd like to verify that check_ready is actually
-	@ looping.
 	@ Based on the 700 MHz processor speed, we should be running "print" way
 	@ faster than the UART is able to process (see baudrate).
+	@
+	@ I verified that check_ready actually is looping by putting "bne hang"
+	@ at the end, and verifying no output in the console.
 	check_ready:
 		ldr r1, AUX_MU_LSR_REG
 		ldr r0, [r1]
