@@ -53,7 +53,8 @@ wait:
 		b loop
 	endloop:
 
-@ Write 0 to the UART forever
+@ Write all ASCII graphic characters forever. 
+mov r2, #0x20
 print:
 	@ Poll until transmitter is idle and empty
 	@
@@ -68,10 +69,18 @@ print:
 		and r0, r0, #0b01100000
 		teq r0, #0b01100000
 		bne check_ready
-	@ Write 0
-	mov r0, #0x30
+
+	@ Write character
 	ldr r1, AUX_MU_IO_REG
-	str r0, [r1]
+	str r2, [r1]
+
+	@ Increment to next character
+	add r2, r2, #1
+
+	@ Wraparound
+	cmp r2, #0x7f
+	movge r2, #0x20
+
 	b print
 
 @ We need this because ARMv6 for the most part doesn't support immediates
