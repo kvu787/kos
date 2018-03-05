@@ -1,4 +1,11 @@
 start:
+	@ Enable UART TX GPIO pin 14
+	ldr r1, GPFSEL1
+	ldr r0, [r1]
+	bic	r0, r0, #28672 @ clear gpio14 register
+	orr	r0, r0, #8192 @ set gpio14 register
+	str r0, [r1]
+
 	@ Enable the mini UART
 	mov r0, #1
 	ldr r1, AUX_ENABLES
@@ -25,13 +32,6 @@ start:
 	@ baudrate_register = (250000000 / (8 * 115200)) - 1 = 270.27 ~= 270
 	ldr r0, AUX_MU_BAUD_REG_VALUE
 	ldr r1, AUX_MU_BAUD_REG
-	str r0, [r1]
-
-	@ Enable UART TX GPIO pin 14
-	ldr r1, GPFSEL1
-	ldr r0, [r1]
-	bic	r0, r0, #28672 @ clear gpio14 register
-	orr	r0, r0, #8192 @ set gpio14 register
 	str r0, [r1]
 
 @ Write 0 to the UART forever
