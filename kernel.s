@@ -47,11 +47,9 @@ wait:
 	ldr r1, DELAY_VALUE
 	mov r0, #0
 	loop:
-		cmp r0, r1
-		bge endloop
 		add r0, r0, #1
-		b loop
-	endloop:
+		cmp r0, r1
+		blt loop
 
 @ Write all ASCII graphic characters forever. 
 mov r2, #0x20
