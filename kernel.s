@@ -34,6 +34,25 @@ start:
 	ldr r1, AUX_MU_BAUD_REG
 	str r0, [r1]
 
+@ Wait about 8 seconds.
+@ The user should start their terminal before this delay finishes.
+@
+@ Before I put this here, about 50% of the time I was getting gibberish in
+@ in my output.
+@ I'm guessing that since my client terminal always connected after this began
+@ blasting characters, the client sometimes picked up the middle of a UART
+@ transmission and started getting gibberish.
+DELAY_VALUE: .word 99999999
+wait:
+	ldr r1, DELAY_VALUE
+	mov r0, #0
+	loop:
+		cmp r0, r1
+		bge endloop
+		add r0, r0, #1
+		b loop
+	endloop:
+
 @ Write 0 to the UART forever
 print:
 	@ Poll until transmitter is idle and empty
