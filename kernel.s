@@ -3,11 +3,6 @@ mov r0, #1
 ldr r1, AUX_ENABLES
 str r0, [r1]
 
-@ Disable mini UART interrupts
-mov r0, #0
-ldr r1, AUX_MU_IER_REG
-str r0, [r1]
-
 @ Use 8-bit mode, instead of 7-bit mode.
 @ I think 7-bit mode uses the 8th bit for a parity check.
 mov r0, #3
