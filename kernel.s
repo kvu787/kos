@@ -61,6 +61,16 @@ wait:
 		cmp r0, r1
 		blt loop
 
+@ Uncomment this to enable the stack
+@ Setup the stack so we can start calling subroutines (eventually?)
+@
+@ We set it to 0x8000, which is where this program is loaded, because we know
+@ that we won't need to preserve those instructions by the time we get here,
+@ and we know nothing else is using it, so we can use it. (As long as our
+@ stack doesn't grow enormously and begin overwriting instructions we care
+@ about.)
+@ mov sp, #0x8000
+
 @ Write all ASCII graphic characters forever. 
 mov r0, #0x20
 print:
