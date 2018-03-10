@@ -1,3 +1,5 @@
+@@@@ Main code
+
 start:
 	@ This is basically a UART driver.
 	@ The most helpful resources I found while implementing this were
@@ -73,20 +75,7 @@ print:
 	@ Loop
 	b print
 
-@ We need this because ARMv6 for the most part doesn't support immediates
-@ outside of 0-255, so we need to load 270 from memory.
-@ There are some tricks you can do to encode immediates greater than 255, but
-@ I guess it doesn't work for 270.
-AUX_MU_BAUD_REG_VALUE: .word 270
-
-@ Peripheral registers (i.e. memory locations you read/write to use peripherals)
-GPFSEL1: .word 0x20200004
-AUX_ENABLES: .word 0x20215004
-AUX_MU_IO_REG: .word 0x20215040
-AUX_MU_IIR_REG: .word 0x20215048
-AUX_MU_LCR_REG: .word 0x2021504C
-AUX_MU_BAUD_REG: .word 0x20215068
-AUX_MU_LSR_REG: .word 0x20215054
+@@@@ Subroutines
 
 @ This subroutine transmits the character stored in r0 through the UART
 @ caller-saved registers: r0-r3
@@ -115,3 +104,20 @@ print_char:
 
 	@ return
 	bx lr
+
+@@@@ Constants
+
+@ We need this because ARMv6 for the most part doesn't support immediates
+@ outside of 0-255, so we need to load 270 from memory.
+@ There are some tricks you can do to encode immediates greater than 255, but
+@ I guess it doesn't work for 270.
+AUX_MU_BAUD_REG_VALUE: .word 270
+
+@ Peripheral registers (i.e. memory locations you read/write to use peripherals)
+GPFSEL1: .word 0x20200004
+AUX_ENABLES: .word 0x20215004
+AUX_MU_IO_REG: .word 0x20215040
+AUX_MU_IIR_REG: .word 0x20215048
+AUX_MU_LCR_REG: .word 0x2021504C
+AUX_MU_BAUD_REG: .word 0x20215068
+AUX_MU_LSR_REG: .word 0x20215054
