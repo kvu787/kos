@@ -44,47 +44,47 @@ start:
 	ldr r1, AUX_MU_BAUD_REG
 	str r0, [r1]
 
-@ Wait about 8 seconds.
-@ The user should start their terminal before this delay finishes.
-@
-@ Before I put this here, about 50% of the time I was getting gibberish in
-@ in my output.
-@ I'm guessing that since my client terminal always connected after this began
-@ blasting characters, the client sometimes picked up the middle of a UART
-@ transmission and started getting gibberish.
-DELAY_VALUE: .word 99999999
-wait:
-	ldr r1, DELAY_VALUE
-	mov r0, #0
-	loop:
-		add r0, r0, #1
-		cmp r0, r1
-		blt loop
+	@ Wait about 8 seconds.
+	@ The user should start their terminal before this delay finishes.
+	@
+	@ Before I put this here, about 50% of the time I was getting gibberish in
+	@ in my output.
+	@ I'm guessing that since my client terminal always connected after this began
+	@ blasting characters, the client sometimes picked up the middle of a UART
+	@ transmission and started getting gibberish.
+	DELAY_VALUE: .word 99999999
+	wait:
+		ldr r1, DELAY_VALUE
+		mov r0, #0
+		loop:
+			add r0, r0, #1
+			cmp r0, r1
+			blt loop
 
-@ Uncomment this to enable the stack
-@ Setup the stack so we can start calling subroutines (eventually?)
-@
-@ We set it to 0x8000, which is where this program is loaded, because we know
-@ that we won't need to preserve those instructions by the time we get here,
-@ and we know nothing else is using it, so we can use it. (As long as our
-@ stack doesn't grow enormously and begin overwriting instructions we care
-@ about.)
-@ mov sp, #0x8000
+	@ Uncomment this to enable the stack
+	@ Setup the stack so we can start calling subroutines (eventually?)
+	@
+	@ We set it to 0x8000, which is where this program is loaded, because we know
+	@ that we won't need to preserve those instructions by the time we get here,
+	@ and we know nothing else is using it, so we can use it. (As long as our
+	@ stack doesn't grow enormously and begin overwriting instructions we care
+	@ about.)
+	@ mov sp, #0x8000
 
-@ Write all ASCII graphic characters forever. 
-mov r4, #0x20
-print:
-	@ Write character
-	mov r0, r4
-	bl print_char
+	@ Write all ASCII graphic characters forever.
+	mov r4, #0x20
+	print:
+		@ Write character
+		mov r0, r4
+		bl print_char
 
-	@ Increment to next character, with wraparound
-	add r4, r4, #1
-	cmp r4, #0x7f
-	movge r4, #0x20
+		@ Increment to next character, with wraparound
+		add r4, r4, #1
+		cmp r4, #0x7f
+		movge r4, #0x20
 
-	@ Loop
-	b print
+		@ Loop
+		b print
 
 @@@@ Subroutines
 
