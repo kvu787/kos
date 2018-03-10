@@ -60,33 +60,17 @@ wait:
 		blt loop
 
 @ Write all ASCII graphic characters forever. 
-mov r2, #0x20
+mov r0, #0x20
 print:
-	@ Poll until transmitter is idle and empty
-	@
-	@ Based on the 700 MHz processor speed, we should be running "print" way
-	@ faster than the UART is able to process (see baudrate).
-	@
-	@ I verified that check_ready actually is looping by putting "bne hang"
-	@ at the end, and verifying no output in the console.
-	check_ready:
-		ldr r1, AUX_MU_LSR_REG
-		ldr r0, [r1]
-		and r0, r0, #0b01100000
-		teq r0, #0b01100000
-		bne check_ready
-
 	@ Write character
-	ldr r1, AUX_MU_IO_REG
-	str r2, [r1]
+	bl print_char
 
-	@ Increment to next character
-	add r2, r2, #1
+	@ Increment to next character, with wraparound
+	add r0, r0, #1
+	cmp r0, #0x7f
+	movge r0, #0x20
 
-	@ Wraparound
-	cmp r2, #0x7f
-	movge r2, #0x20
-
+	@ Loop
 	b print
 
 @ We need this because ARMv6 for the most part doesn't support immediates
@@ -103,3 +87,31 @@ AUX_MU_IIR_REG: .word 0x20215048
 AUX_MU_LCR_REG: .word 0x2021504C
 AUX_MU_BAUD_REG: .word 0x20215068
 AUX_MU_LSR_REG: .word 0x20215054
+
+@ This subroutine transmits the character stored in r0 through the UART
+@ caller-saved registers: r0-r3
+@ callee-saved registers: r4-r11
+@ r0 = character to print
+@ TODO?: return from this function only when we know the character has left
+@ the transmit queue. I.e. flush it.
+print_char:
+	@ Poll until transmitter is idle and empty
+	@
+	@ Based on the 700 MHz processor speed, we should be running "print" way
+	@ faster than the UART is able to process (see baudrate).
+	@
+	@ I verified that check_ready actually is looping by putting "bne hang"
+	@ at the end, and verifying no output in the console.
+	check_ready:
+		ldr r4, AUX_MU_LSR_REG
+		ldr r5, [r4]
+		and r5, r5, #0b01100000
+		teq r5, #0b01100000
+		bne check_ready
+
+	@ Write character to transmitter
+	ldr r4, AUX_MU_IO_REG
+	str r0, [r4]
+
+	@ return
+	bx lr
