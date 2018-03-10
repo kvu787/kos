@@ -1,4 +1,12 @@
 start:
+	@ This is basically a UART driver.
+	@ The most helpful resources I found while implementing this were
+	@   * Stanford's cs140e class: https://web.stanford.edu/class/cs140e/assignments/1-shell/
+	@   * dwelch67's working bare metal programs: https://github.com/dwelch67/raspberrypi
+	@     * The uart01/ folder in particular.
+	@   * The BCM2835 manual. Try to get the BCM2837 manual with errata fixes:
+	@     https://raspberrypi.stackexchange.com/a/78792/80441
+
 	@ Enable UART TX GPIO pin 14
 	ldr r1, GPFSEL1
 	ldr r0, [r1]
