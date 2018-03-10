@@ -72,15 +72,16 @@ wait:
 @ mov sp, #0x8000
 
 @ Write all ASCII graphic characters forever. 
-mov r0, #0x20
+mov r4, #0x20
 print:
 	@ Write character
+	mov r0, r4
 	bl print_char
 
 	@ Increment to next character, with wraparound
-	add r0, r0, #1
-	cmp r0, #0x7f
-	movge r0, #0x20
+	add r4, r4, #1
+	cmp r4, #0x7f
+	movge r4, #0x20
 
 	@ Loop
 	b print
@@ -102,15 +103,15 @@ print_char:
 	@ I verified that check_ready actually is looping by putting "bne hang"
 	@ at the end, and verifying no output in the console.
 	check_ready:
-		ldr r4, AUX_MU_LSR_REG
-		ldr r5, [r4]
-		and r5, r5, #0b01100000
-		teq r5, #0b01100000
+		ldr r1, AUX_MU_LSR_REG
+		ldr r2, [r1]
+		and r2, r2, #0b01100000
+		teq r2, #0b01100000
 		bne check_ready
 
 	@ Write character to transmitter
-	ldr r4, AUX_MU_IO_REG
-	str r0, [r4]
+	ldr r1, AUX_MU_IO_REG
+	str r0, [r1]
 
 	@ return
 	bx lr
