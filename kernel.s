@@ -71,6 +71,32 @@ start:
 	@ about.)
 	@ mov sp, #0x8000
 
+	@ print "hello, world\n"
+	print_hello_world:
+		@ int counter = HELLO_WORLD_LENGTH
+		ldr r4, HELLO_WORLD_LENGTH
+		@ char *character_pointer = &HELLO_WORLD[0]
+		ldr r5, HELLO_WORLD_ADDRESS
+		@ char character
+		mov r6, #0
+		@ while (true)
+		print_hello_world_loop:
+			@ if (counter <= 0) break
+			cmp r4, #0
+			ble print_hello_world_loop_exit
+			@ character = *character_pointer
+			ldrb r6, [r5]
+			@ print(*character_pointer)
+			mov r0, r6
+			bl print_char
+			@ ++character_pointer
+			add r5, r5, #1
+			@ --counter
+			sub r4, r4, #1
+			@ loop
+			b print_hello_world_loop
+		print_hello_world_loop_exit:
+
 	@ Write all ASCII graphic characters forever.
 	mov r4, #0x20
 	print:
@@ -132,3 +158,16 @@ AUX_MU_IIR_REG: .word 0x20215048
 AUX_MU_LCR_REG: .word 0x2021504C
 AUX_MU_BAUD_REG: .word 0x20215068
 AUX_MU_LSR_REG: .word 0x20215054
+
+@ hello world string
+@
+@ This was another gotcha. Initially, I put these directives before the other
+@ constants (such as GPFSEL1). Then I stopped seeing console output. Turns out
+@ 13 byte HELLO_WORLD string messed up the alignment of the other constants.
+@ By default, ARMv6 aligns all word loads/stores to the 4-byte word boundary.
+@ There's a mode to enable unaligned loads/stores, but I don't care to enable
+@ it for now.
+HELLO_WORLD_LENGTH: .word 0xd
+HELLO_WORLD_ADDRESS: .word HELLO_WORLD
+HELLO_WORLD: .ascii "hello, world\n"
+
