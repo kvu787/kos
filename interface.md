@@ -2,6 +2,7 @@
 
 kos is a distributed operating system that runs on 1+ physical machines that are connected with a switch.
 
+```
   *----switch-----*
   |       |       |
 *----*  *----*  *----*
@@ -11,6 +12,7 @@ kos is a distributed operating system that runs on 1+ physical machines that are
        *-----*
        | TTY |
        *-----*
+```
 
 Steps for the user:
 
