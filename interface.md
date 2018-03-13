@@ -47,10 +47,12 @@ When the program accesses non-paged memory and generates exception, the kernel w
 
 ## Distributed and virtualized processor
 
-Programs can start another thread of execution by issuing an exec system call.
+Programs can start another thread of execution by issuing an `exec` system call.
 Exec starts another thread at the given instruction_pointer:
 
+```c
 void exec(uint64_t instruction_pointer);
+```
 
 These are properties of the new thread:
 
