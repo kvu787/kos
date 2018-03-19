@@ -64,11 +64,9 @@ start:
 	@ Uncomment this to enable the stack
 	@ Setup the stack so we can start calling subroutines (eventually?)
 	@
-	@ We set it to 0x8000, which is where this program is loaded, because we know
-	@ that we won't need to preserve those instructions by the time we get here,
-	@ and we know nothing else is using it, so we can use it. (As long as our
-	@ stack doesn't grow enormously and begin overwriting instructions we care
-	@ about.)
+	@ We set it to 0x8000, because dwelch did and his code seems to run fine.
+	@ I know that the ARMv6 exception vector table is at 0x0 - 0x20. Otherwise,
+	@ I'm not sure if there's other stuff from 0x0 to 0x8000.
 	@ mov sp, #0x8000
 
 	@ print "hello, world\n"
