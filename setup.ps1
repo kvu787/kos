@@ -12,5 +12,12 @@ if ($md5Hash -ne '168c68c41ee0986ecc1dadceaa8b6a3f')
 'Expanding ZIP file...'
 Expand-Archive 'gcc-arm-none-eabi-7-2017-q4-major-win32.zip'
 
+# I use a cloud sync service, so I don't want to sync the whole arm toolchain folder.
+'Moving executables out...'
+mv 'gcc-arm-none-eabi-7-2017-q4-major-win32\bin' arm_toolchain
+
+'Deleting folder...'
+Remove-Item -Recurse 'gcc-arm-none-eabi-7-2017-q4-major-win32'
+
 'Deleting ZIP file...'
 Remove-Item 'gcc-arm-none-eabi-7-2017-q4-major-win32.zip'
