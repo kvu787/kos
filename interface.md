@@ -1,3 +1,5 @@
+This is a design doc. The implementation has a ways to go to get here.
+
 # How to use kos
 
 kos is a distributed operating system that runs on 1+ physical machines that are connected with a switch.
