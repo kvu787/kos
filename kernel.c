@@ -58,6 +58,21 @@ void kernel_main() {
     // wait 10 seconds for client to connect TTY
     delay(10 * 1000);
 
+    print("Testing print_char... ");
+    print_char('p');
+    print_char('a');
+    print_char('s');
+    print_char('s');
+    print_char('\r');
+    print_char('\n');
+    print("Testing print... ");
+    print("pass\r\n");
+    print("Testing read_char... press any key to continue");
+    read_char();
+    print("\r");
+    print("Testing read_char... pass                     \r\n");
+    print("\r\n");
+
     print("Hello, welcome to kos.\r\n");
     print("Type something and you should see it echoed back to the console.\r\n");
     while (1) {
