@@ -29,18 +29,18 @@ void test_uart() {
     print("pass\r\n");
 
     print("* Test read_byte\r\n");
-    print("Press any key to continue\r\n");
+    print("Press any key to continue.\r\n");
     read_byte();
     print("pass\r\n");
 
     print("* Test read_byte_and_echo\r\n");
-    print("Press any key and you should see it echoed back to the console\r\n");
+    print("Press any key and you should see it echoed back to the console.\r\n");
     read_byte_and_echo();
     print("\r\n");
     print("pass\r\n");
 
     print("* Test read_until_and_echo\r\n");
-    print("Type hello! and press ENTER. You should see hello echoed back to the console.\r\n");
+    print("Type hello! and you should see hello echoed back to the console.\r\n");
     uint8_t buffer[20];
     uint32_t num_bytes_read = read_until_and_echo(buffer, '!');
     if (num_bytes_read != 5) {
