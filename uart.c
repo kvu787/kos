@@ -32,6 +32,30 @@ uint8_t read_byte() {
     return *AUX_MU_IO_REG & 0xff;
 }
 
+uint8_t read_byte_and_echo() {
+    uint8_t byte = read_byte();
+    if (byte == '\r') {
+        print("\r\n");
+    } else {
+        print_byte(byte);
+    }
+    return byte;
+}
+
+uint32_t read_until_and_echo(uint8_t *buffer, uint8_t delimiter) {
+    uint32_t buffer_length = 0;
+    while (1) {
+        uint8_t byte = read_byte_and_echo();
+        if (byte == delimiter) {
+            break;
+        }
+        *buffer = byte;
+        ++buffer;
+        ++buffer_length;
+    }
+    return buffer_length;
+}
+
 void setup_uart() {
     // setup GPIO pins for UART
     uint32_t gpfsel1_value = *GPFSEL1;

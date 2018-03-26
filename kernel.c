@@ -11,8 +11,11 @@ void kernel_main() {
     spin(10 * 1000);
 
     test_uart();
+    print("\r\n");
 
     print("Hello, welcome to kos.\r\n");
+    print("Type help and press ENTER to view commands.");
+
     print("Type something and you should see it echoed back to the console.\r\n");
     while (1) {
         uint8_t c = read_byte();
