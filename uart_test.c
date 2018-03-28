@@ -2,19 +2,9 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "uart.h"
-
-static bool bytes_equal(uint8_t *a, uint8_t *b, uint32_t length) {
-    for (; length > 0; --length) {
-        if (*a != *b) {
-            return false;
-        }
-        ++a;
-        ++b;
-    }
-    return true;
-}
 
 void test_uart() {
     print("* Test print_byte\r\n");
@@ -47,7 +37,7 @@ void test_uart() {
         print("Wrong number of characters entered.\r\n");
     }
     uint8_t *expected = "hello";
-    if (!bytes_equal(buffer, expected, 5)) {
+    if (memcmp(buffer, expected, 5) != 0) {
         print("Wrong characters entered.");
     }
     print("\r\n");
