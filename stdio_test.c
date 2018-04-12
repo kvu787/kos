@@ -112,8 +112,32 @@ bool test_stdio() {
         return false;
     }
 
+    puts("* Test sscanf");
+    memset(string1, 1, 10);
+    memset(string2, 1, 10);
+    u1 = 0;
+    u2 = 0;
+    sscanf("hello 1 % world 2", "%s %u %% %s %u", string1, &u1, string2, &u2);
+    if (memcmp(string1, "hello\0", 6) != 0) {
+        puts("fail: Did not receive hello");
+        return false;
+    }
+    if (u1 != 1) {
+        puts("fail: Did not receive 1");
+        return false;
+    }
+    if (memcmp(string2, "world\0", 6) != 0) {
+        puts("fail: Did not receive world");
+        return false;
+    }
+    if (u2 != 2) {
+        puts("fail: Did not receive 2");
+        return false;
+    }
+    puts("pass");
+
     puts("* Test printf");
-    puts("You should 3 lines of text repeated twice.");
+    puts("You should see the following 3 lines repeated twice.");
     puts("hello");
     puts("hello world");
     puts("hello 1 world 2 !");

@@ -4,7 +4,8 @@
 #include <stddef.h>
 
 // >= 0 on success
-// < 0 on error
+// = -1 on EOF
+// < -1 on error
 int getchar(void);
 
 // NULL on error
@@ -21,6 +22,10 @@ int puts(const char *str);
 // >= 0 on success
 // -1 if format does not match input
 int scanf(const char *format, ...);
+
+// >= 0 on success
+// -1 if format does not match input
+int sscanf(const char *str, const char *format, ...);
 
 // >= 0 on success
 // < 0 on error
