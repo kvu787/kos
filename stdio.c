@@ -15,8 +15,8 @@ static uint32_t *const AUX_MU_LSR_REG = (uint32_t *)  0x20215054;
 
 int getchar(void) {
     // Wait until receive FIFO is not empty
-    while (!(*AUX_MU_LSR_REG & 1))
-        ;
+    while (!(*AUX_MU_LSR_REG & 1)) {
+    }
     char c = *AUX_MU_IO_REG & 0xff;
     if (c == '\r') {
         putchar('\r');
