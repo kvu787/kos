@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
-bool test_stdio();
+bool test_stdio(void);
+bool test_stdio_input(void);
 
 #endif // TEST_STDIO_H_
