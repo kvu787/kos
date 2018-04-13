@@ -5,19 +5,10 @@
 #include <stdint.h>
 #include <string.h>
 
-static uint32_t *const GPFSEL1 = (uint32_t *)         0x20200004;
-static uint32_t *const AUX_ENABLES = (uint32_t *)     0x20215004;
-static uint32_t *const AUX_MU_IO_REG = (uint32_t *)   0x20215040;
-static uint32_t *const AUX_MU_IIR_REG = (uint32_t *)  0x20215048;
-static uint32_t *const AUX_MU_LCR_REG = (uint32_t *)  0x2021504C;
-static uint32_t *const AUX_MU_BAUD_REG = (uint32_t *) 0x20215068;
-static uint32_t *const AUX_MU_LSR_REG = (uint32_t *)  0x20215054;
+#include "uart.h"
 
 int getchar(void) {
-    // Wait until receive FIFO is not empty
-    while (!(*AUX_MU_LSR_REG & 1)) {
-    }
-    char c = *AUX_MU_IO_REG & 0xff;
+    char c = uart_getchar();
     if (c == '\r') {
         putchar('\r');
         putchar('\n');
@@ -37,10 +28,7 @@ char *gets(char *str, size_t n) {
 }
 
 int putchar(char ch) {
-    // Wait until transmit FIFO is idle and empty
-    while (((*AUX_MU_LSR_REG) & 0x60) != 0x60)
-        ;
-    *AUX_MU_IO_REG = ch;
+    uart_putchar(ch);
     return 0;
 }
 
@@ -207,22 +195,4 @@ int printf(const char *format, ...) {
     }
     va_end(args);
     return 0;
-}
-
-void setup_uart() {
-    // setup GPIO pins for UART
-    uint32_t gpfsel1_value = *GPFSEL1;
-    // transmit = gpio14
-    gpfsel1_value &= ~(7<<12);
-    gpfsel1_value |= 2<<12;
-    // receive = gpio15
-    gpfsel1_value &= ~(7<<15);
-    gpfsel1_value |= 2<<15;
-    *GPFSEL1 = gpfsel1_value;
-
-    // setup UART
-    *AUX_ENABLES = 1;
-    *AUX_MU_LCR_REG = 3;
-    *AUX_MU_IIR_REG = 0xC6;
-    *AUX_MU_BAUD_REG = 270;
 }

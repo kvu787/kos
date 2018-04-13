@@ -31,6 +31,4 @@ int sscanf(const char *str, const char *format, ...);
 // < 0 on error
 int printf(const char *format, ...);
 
-void setup_uart();
-
 #endif // STDIO_H_
