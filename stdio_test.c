@@ -50,6 +50,79 @@ bool test_stdio() {
         puts("fail: Did not receive 2");
         return false;
     }
+
+    sscanf("hello%", "hello%%");
+
+    memset(string1, 1, 10);
+    memset(string2, 1, 10);
+    u1 = 0;
+    u2 = 0;
+    sscanf("hello\r", "%s\r", string1);
+    if (memcmp(string1, "hello\0", 6)) {
+        puts("fail: Did not receive hello");
+        return false;
+    }
+
+    memset(string1, 1, 10);
+    memset(string2, 1, 10);
+    u1 = 0;
+    u2 = 0;
+    sscanf("1\r", "%u\r", &u1);
+    if (u1 != 1) {
+        puts("fail: Did not receive 1");
+        return false;
+    }
+
+    memset(string1, 1, 10);
+    memset(string2, 1, 10);
+    u1 = 0;
+    u2 = 0;
+    sscanf("hello 1 world 2 \r", "%s 1 world %u\r", string1, &u1);
+    if (memcmp(string1, "hello\0", 6) != 0) {
+        puts("fail: Did not receive hello");
+        return false;
+    }
+    if (u1 != 2) {
+        puts("fail: Did not receive 2");
+        return false;
+    }
+
+    memset(string1, 1, 10);
+    memset(string2, 1, 10);
+    u1 = 0;
+    u2 = 0;
+    sscanf("hello 1 world 2\r", "hello %u %s 2\r", &u1, string1);
+    if (u1 != 1) {
+        puts("fail: Did not receive 1");
+        return false;
+    }
+    if (memcmp(string1, "world\0", 6) != 0) {
+        puts("fail: Did not receive world");
+        return false;
+    }
+
+    memset(string1, 1, 10);
+    memset(string2, 1, 10);
+    u1 = 0;
+    u2 = 0;
+    sscanf("hello 1 world 2\r", "%s %u %s %u\r", string1, &u1, string2, &u2);
+    if (memcmp(string1, "hello\0", 6) != 0) {
+        puts("fail: Did not receive hello");
+        return false;
+    }
+    if (u1 != 1) {
+        puts("fail: Did not receive 1");
+        return false;
+    }
+    if (memcmp(string2, "world\0", 6) != 0) {
+        puts("fail: Did not receive world");
+        return false;
+    }
+    if (u2 != 2) {
+        puts("fail: Did not receive 2");
+        return false;
+    }
+
     puts("pass");
 
     puts("* Test printf");
@@ -87,56 +160,9 @@ bool test_stdio_input() {
 
     puts("* Test scanf");
 
-    puts("Type hello%. You should see it echoed back.");
-    scanf("hello%%");
-    puts("");
-    
     char string1[10];
-    unsigned long u1;
-
-    puts("Type hello and press ENTER. You should see it echoed back.");
-    memset(string1, 1, 10);
-    scanf("%s\r", string1);
-    if (memcmp(string1, "hello\0", 6)) {
-        puts("fail: Did not receive hello");
-        return false;
-    }
-
-    puts("Type 1 and press ENTER. You should see it echoed back.");
-    u1 = 0;
-    scanf("%u\r", &u1);
-    if (u1 != 1) {
-        puts("fail: Did not receive 1");
-        return false;
-    }
-
-    puts("Type hello 1 world 2 and press ENTER. You should see it echoed back.");
-    memset(string1, 1, 10);
-    u1 = 0;
-    scanf("%s 1 world %u\r", string1, &u1);
-    if (memcmp(string1, "hello\0", 6) != 0) {
-        puts("fail: Did not receive hello");
-        return false;
-    }
-    if (u1 != 2) {
-        puts("fail: Did not receive 2");
-        return false;
-    }
-
-    puts("Type hello 1 world 2 and press ENTER. You should see it echoed back.");
-    memset(string1, 1, 10);
-    u1 = 0;
-    scanf("hello %u %s 2\r", &u1, string1);
-    if (u1 != 1) {
-        puts("fail: Did not receive 1");
-        return false;
-    }
-    if (memcmp(string1, "world\0", 6) != 0) {
-        puts("fail: Did not receive world");
-        return false;
-    }
-
     char string2[10];
+    unsigned long u1;
     unsigned long u2;
 
     puts("Type hello 1 world 2 and press ENTER. You should see it echoed back.");
