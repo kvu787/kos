@@ -1,5 +1,7 @@
 function Clean {
-    Remove-Item -Force -Recurse -Path obj
+    if (Test-Path obj) {
+        Remove-Item -Force -Recurse -Path obj
+    }
 }
 
 if ($args.length -gt 0 -and $args[0] -eq 'clean')
