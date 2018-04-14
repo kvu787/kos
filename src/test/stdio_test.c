@@ -4,25 +4,25 @@
 
 #include "../stdio.h"
 
+static bool test_sscanf(void);
+
 bool test_stdio() {
-    puts("* Test putchar");
-    putchar('p');
-    putchar('a');
-    putchar('s');
-    putchar('s');
-    puts("");
+    if (!test_sscanf()) {
+        return false;
+    }
+    return true;
+}
 
-    puts("* Test puts");
-    puts("pass");
-
+static bool test_sscanf(void) {
     char string1[10];
     char string2[10];
     unsigned long u1;
     unsigned long u2;
 
-    puts("* Test sscanf");
-
+    memset(string1, 1, 10);
+    memset(string2, 1, 10);
     u1 = 0;
+    u2 = 0;
     sscanf("112", "%u", &u1);
     if (u1 != 112) {
         puts("fail: Did not receive 112");
@@ -123,17 +123,6 @@ bool test_stdio() {
         return false;
     }
 
-    puts("pass");
-
-    puts("* Test printf");
-    puts("You should see the following 3 lines repeated twice.");
-    puts("hello");
-    puts("hello world");
-    puts("hello 1 world 2 !");
-    printf("hello\r\n");
-    printf("hello %s\r\n", "world");
-    printf("hello %u %s %u !\r\n", 1, "world", 2);
-
     return true;
 }
 
@@ -189,4 +178,25 @@ bool test_stdio_input() {
     }
 
     return true;
+}
+
+void test_stdio_output(void) {
+    puts("* Test putchar");
+    putchar('p');
+    putchar('a');
+    putchar('s');
+    putchar('s');
+    puts("");
+
+    puts("* Test puts");
+    puts("pass");
+
+    puts("* Test printf");
+    puts("You should see the following 3 lines repeated twice.");
+    puts("hello");
+    puts("hello world");
+    puts("hello 1 world 2 !");
+    printf("hello\r\n");
+    printf("hello %s\r\n", "world");
+    printf("hello %u %s %u !\r\n", 1, "world", 2);
 }
