@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "math.h"
 #include "uart.h"
 
 int getchar(void) {
@@ -145,26 +146,6 @@ int sscanf(const char *str, const char *format, ...) {
     int return_value = vscanf(getchar_f, format, args);
     va_end(args);
     return return_value;
-}
-
-static unsigned long get_num_digits(unsigned long ul) {
-    if (ul == 0) {
-        return 1;
-    }
-    unsigned long num_digits = 0;
-    while (ul) {
-        ++num_digits;
-        ul /= 10;
-    }
-    return num_digits;
-}
-
-static unsigned long get_ith_digit(unsigned long ul, unsigned long i) {
-    while (i) {
-        ul /= 10;
-        --i;
-    }
-    return ul % 10;
 }
 
 int printf(const char *format, ...) {
