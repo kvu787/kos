@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-#include "stdio.h"
+#include "../stdio.h"
 
 bool test_stdio() {
     puts("* Test putchar");

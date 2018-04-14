@@ -4,7 +4,7 @@
 
 #include "cpu.h"
 #include "stdio.h"
-#include "stdio_test.h"
+#include "test/stdio_test.h"
 #include "uart.h"
 
 #define COMMAND_LINE_SIZE 200
