@@ -21,6 +21,13 @@ void setup_uart(void) {
     gpfsel1_value |= 2<<15;
     *GPFSEL1 = gpfsel1_value;
 
+    // BCM docs say that the UART will start receiving 0x0 characters if
+    // the GPIO is not set up before-hand. GPIO 14 and 15 are pull-down by
+    // default, so it seems like we should set them to pull-up before enabling
+    // the UART? However, the tests clearly show that we're not getting a bunch
+    // of 0x0 characters. So I assume that setting UART alt functions also
+    // sets them to pull-up.
+
     // setup UART
     *AUX_ENABLES = 1;
     *AUX_MU_LCR_REG = 3;
