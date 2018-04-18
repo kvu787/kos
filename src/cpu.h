@@ -8,4 +8,10 @@
 // clock speed.
 void spin(uint32_t milliseconds);
 
+
+// Return the number of microseconds elapsed since power-on.
+// Since it's 32 bits, it wraps around every ~72 minutes.
+// Assumes we're running on a BCM2835.
+uint32_t system_timer();
+
 #endif // CPU_H_

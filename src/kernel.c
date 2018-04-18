@@ -7,6 +7,7 @@
 #include "stdio.h"
 #include "uart.h"
 
+#include "test/cpu_test.h"
 #include "test/stdio_test.h"
 
 #define COMMAND_LINE_SIZE 200
@@ -32,16 +33,23 @@ static char *getline(char *buffer, size_t size) {
 }
 
 void kernel_main(void) {
+    // Setup the UART device
     setup_uart();
 
-    // wait 10 seconds for client to connect TTY
+    // Wait 10 seconds for client to connect TTY
     spin(10 * 1000);
 
+    // Run unit tests
     if (!test_stdio()) {
         puts("test_stdio failed");
         hang();
     }
+    if (!test_cpu()) {
+        puts("test_cpu failed");
+        hang();
+    }
 
+    // Start shell
     puts("Hello, welcome to kos.");
     puts("Type a reverse polish notation expression and press ENTER to evaluate it.");
     char command_line[COMMAND_LINE_SIZE];
