@@ -33,12 +33,6 @@ static char *getline(char *buffer, size_t size) {
 }
 
 void kernel_main(void) {
-    // Setup the UART device
-    setup_uart();
-
-    // Wait 10 seconds for client to connect TTY
-    spin(10 * 1000);
-
     // Run unit tests
     if (!test_stdio()) {
         puts("test_stdio failed");
