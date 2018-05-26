@@ -17,21 +17,6 @@ static void hang(void) {
     }
 }
 
-static char *getline(char *buffer, size_t size) {
-    --size;
-    while (size > 0) {
-        char c = getchar();
-        if (c == '\r') {
-            break;
-        } else {
-            *buffer++ = c;
-        }
-        --size;
-    }
-    *buffer = '\0';
-    return buffer;
-}
-
 void kernel_main(void) {
     // Run unit tests
     if (!test_stdio()) {
@@ -48,7 +33,10 @@ void kernel_main(void) {
     puts("Type a reverse polish notation expression and press ENTER to evaluate it.");
     char command_line[COMMAND_LINE_SIZE];
     while (true) {
-        getline(command_line, COMMAND_LINE_SIZE);
+        if (getline(command_line, COMMAND_LINE_SIZE) == NULL) {
+            printf("\r\nCommand too long. Max size is %u\r\n", COMMAND_LINE_SIZE-1);
+            continue;
+        }
         unsigned long result = rpn(command_line);
         printf("%u\r\n", result);
     }

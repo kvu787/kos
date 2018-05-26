@@ -11,6 +11,13 @@ int getchar(void);
 // NULL on error
 char *gets(char *str, size_t n);
 
+// Reads up to (size - 1) characters of user input until ENTER is sent.
+// size = size of buffer
+// Returns
+//   buffer
+//   Or NULL if user input exceeds buffer size.
+char *getline(char *buffer, size_t size);
+
 // >= 0 on success
 // < 0 on error
 int putchar(char ch);

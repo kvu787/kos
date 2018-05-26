@@ -28,6 +28,26 @@ char *gets(char *str, size_t n) {
     return str;
 }
 
+char *getline(char *buffer, size_t size) {
+    --size;
+    bool hasReceivedEnter = false;
+    while (size > 0 && !hasReceivedEnter) {
+        char c = getchar();
+        if (c == '\r') {
+            hasReceivedEnter = true;
+        } else {
+            *buffer++ = c;
+            --size;
+        }
+    }
+    if (!hasReceivedEnter && getchar() != '\r') {
+        return NULL;
+    } else {
+        *buffer = '\0';
+        return buffer;
+    }
+}
+
 int putchar(char ch) {
     uart_putchar(ch);
     return 0;
