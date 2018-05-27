@@ -33,6 +33,7 @@ void kernel_main(void) {
     puts("Type a reverse polish notation expression and press ENTER to evaluate it.");
     char command_line[COMMAND_LINE_SIZE];
     while (true) {
+        printf("> ");
         if (getline(command_line, COMMAND_LINE_SIZE) == NULL) {
             printf("\r\nCommand too long. Max size is %u\r\n", COMMAND_LINE_SIZE-1);
             continue;
