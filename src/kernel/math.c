@@ -25,7 +25,6 @@ unsigned long get_ith_digit(unsigned long ul, unsigned long i) {
     return ul % 10;
 }
 
-
 unsigned long rpn(char *expression) {
     static unsigned long buffer[100];
     unsigned long *stack = &buffer[0];
