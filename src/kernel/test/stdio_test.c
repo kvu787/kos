@@ -199,4 +199,6 @@ void test_stdio_output(void) {
     printf("hello\r\n");
     printf("hello %s\r\n", "world");
     printf("hello %u %s %u !\r\n", 1, "world", 2);
+    printf("pi = %d\r\n", 3.14159);
+    printf("double = %d\r\n", -8.19378);
 }

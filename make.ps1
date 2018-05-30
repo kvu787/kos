@@ -59,9 +59,7 @@ function Build-Kernel {
         Remove-Item -Force -Recurse -Path $objDir
     }
     mkdir $objDir > $null
-    cc -O0 -Wpedantic -Wall -ffreestanding -c -march=armv6 -std=c11 $srcDir\*.s $srcDir\*.c $srcDir\test\*.c
-    mv *.o $objDir
-    ld -L'gcc-arm-none-eabi-7-2017-q4-major-win32/arm-none-eabi/lib' -T $srcDir\link.ld -o $objDir\kernel.elf $objDir\*.o -l'c'
+    cc -O0 -Wpedantic -Wall -nostartfiles -ffreestanding -T $srcDir\link.ld -march=armv6 -std=c11 -o $objDir\kernel.elf $srcDir\*.s $srcDir\*.c $srcDir\test\*.c
     objdump -D $objDir\kernel.elf > $objDir\kernel.elf.list
     objcopy -O binary $objDir\kernel.elf $objDir\kernel.img
 }

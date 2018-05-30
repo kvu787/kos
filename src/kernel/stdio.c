@@ -9,6 +9,8 @@
 #include "math.h"
 #include "uart.h"
 
+static const int DOUBLE_PRECISION = 2;
+
 int getchar(void) {
     char c = uart_getchar();
     if (c == '\r') {
@@ -173,7 +175,26 @@ int printf(const char *format, ...) {
     va_list args;
     va_start(args, format);
     while (*format) {
-        if (strncmp("%u", format, 2) == 0) {
+        if (strncmp("%d", format, 2) == 0) {
+            double d = va_arg(args, double);
+            // Handle negatives
+            if (d < 0) {
+                putchar('-');
+                d = -d;
+            }
+            // Print whole part
+            unsigned long ul = (unsigned long) d;
+            printf("%u", ul);
+            // Print fractional part
+            putchar('.');
+            double fractional = d;
+            for (int i = 0; i < DOUBLE_PRECISION; ++i) {
+                fractional = fractional - ((unsigned long) fractional);
+                fractional *= 10;
+                printf("%u", (unsigned long) fractional);
+            }
+            format += 2;
+        } else if (strncmp("%u", format, 2) == 0) {
             unsigned long ul = va_arg(args, unsigned long);
             for (unsigned long i = get_num_digits(ul); i > 0; --i) {
                 unsigned long digit = get_ith_digit(ul, i - 1);
