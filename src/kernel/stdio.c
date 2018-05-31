@@ -12,7 +12,7 @@
 static const int DOUBLE_PRECISION = 2;
 
 int getchar(void) {
-    char c = uart_getchar();
+    char c = getchar_silent();
     if (c == '\r') {
         putchar('\r');
         putchar('\n');
@@ -20,6 +20,10 @@ int getchar(void) {
         putchar(c);
     }
     return c;
+}
+
+int getchar_silent(void) {
+    return uart_getchar();
 }
 
 char *gets(char *str, size_t n) {

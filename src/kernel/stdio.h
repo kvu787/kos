@@ -8,6 +8,11 @@
 // < -1 on error
 int getchar(void);
 
+// >= 0 on success
+// = -1 on EOF
+// < -1 on error
+int getchar_silent(void);
+
 // NULL on error
 char *gets(char *str, size_t n);
 

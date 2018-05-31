@@ -1,8 +1,11 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <string.h>
 
+#include "calc.h"
 #include "cpu.h"
+#include "keyecho.h"
 #include "math.h"
 #include "stdio.h"
 #include "uart.h"
@@ -28,17 +31,29 @@ void kernel_main(void) {
         hang();
     }
 
-    // Start shell
+    // Print startup greeting
     puts("Hello, welcome to kos.");
-    puts("Type a reverse polish notation expression and press ENTER to evaluate it.");
-    char command_line[COMMAND_LINE_SIZE];
+
+    // Start shell
     while (true) {
         printf("> ");
+        char command_line[COMMAND_LINE_SIZE];
         if (getline(command_line, COMMAND_LINE_SIZE) == NULL) {
-            printf("\r\nCommand too long. Max size is %u\r\n", COMMAND_LINE_SIZE-1);
+            printf("\r\nCommand too long. Max size is %u\r\n.", COMMAND_LINE_SIZE-1);
             continue;
         }
-        unsigned long result = rpn(command_line);
-        printf("%u\r\n", result);
+        if (strcmp("help", command_line) == 0) {
+            printf(
+                "Commands:\r\n"
+                "  calc\r\n"
+                "  help\r\n"
+                "  keyecho\r\n");
+        } else if (strcmp("calc", command_line) == 0) {
+            calc_main();
+        } else if (strcmp("keyecho", command_line) == 0) {
+            keyecho_main();
+        } else {
+            puts("Unrecognized command.");
+        }
     }
 }

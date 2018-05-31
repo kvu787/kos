@@ -180,6 +180,9 @@ static bool test_stdio_input() {
         return false;
     }
 
+    puts("Press the ! key. You should not see it echoed back");
+    getchar_silent();
+
     return true;
 }
 
