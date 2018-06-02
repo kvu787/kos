@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 	DCB dcb;
 	memset(&dcb, 0, sizeof(dcb));
 	dcb.DCBlength = sizeof(dcb);
-	ok = BuildCommDCB("115200,n,8,1", &dcb);
+	ok = BuildCommDCB("921600,n,8,1", &dcb);
 	if (!ok)
 	{
 		error("BuildCommDCB");

@@ -18,7 +18,7 @@ function Main {
                 throw 'No COM port name contains ProlificSerial'
             }
             obj\sender\sender.exe COM$port obj\kernel\kernel.img
-            .\teraterm-4.98\teraterm-4.98\ttermpro.exe /BAUD=115200 /C=$port
+            .\teraterm-4.98\teraterm-4.98\ttermpro.exe /BAUD=921600 /C=$port
             break
         }
         'sd' {

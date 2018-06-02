@@ -64,7 +64,7 @@ void setup_uart(void) {
     // System clock frequency = 250 MHz
     // Baudrate = 115200
     // baudrate_register = (250000000 / (8 * 115200)) - 1 = 270.27 ~= 270
-    *AUX_MU_BAUD_REG = 270;
+    *AUX_MU_BAUD_REG = 34;
 }
 
 char uart_getchar(void) {
