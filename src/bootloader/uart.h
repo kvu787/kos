@@ -8,7 +8,4 @@ void setup_uart(void);
 // Blocks until a byte is received from the UART.
 char uart_getchar(void);
 
-// Transmit a byte through the UART.
-void uart_putchar(char ch);
-
 #endif // UART_H_
