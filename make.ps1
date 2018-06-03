@@ -64,7 +64,7 @@ function Build-Kernel {
         throw 'Error while building kernel'
     }
     objdump -D $objDir\kernel.elf > $objDir\kernel.elf.list
-    objcopy -O binary $objDir\kernel.elf $objDir\kernel.img
+    objcopy --set-section-flags '.bss=load,alloc,contents' -O binary $objDir\kernel.elf $objDir\kernel.img
 }
 
 function Build-Bootloader {
@@ -84,7 +84,7 @@ function Build-Bootloader {
         throw 'Error while linking bootloader'
     }
     objdump -D $objDir\bootloader.elf > $objDir\bootloader.elf.list
-    objcopy -O binary $objDir\bootloader.elf $objDir\bootloader.img
+    objcopy --set-section-flags '.bss=load,alloc,contents' -O binary $objDir\bootloader.elf $objDir\bootloader.img
     $bootloaderSize = (Get-ChildItem $objDir\bootloader.img).Length
     $bootloaderMaxSize = 0x1000
     if ($bootloaderSize -gt $bootloaderMaxSize) {
