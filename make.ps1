@@ -59,7 +59,10 @@ function Build-Kernel {
         Remove-Item -Force -Recurse -Path $objDir
     }
     mkdir $objDir > $null
-    cc -O0 -Wpedantic -Wall -nostartfiles -ffreestanding -T $srcDir\link.ld -march=armv6 -std=c11 -o $objDir\kernel.elf $srcDir\*.s $srcDir\*.c $srcDir\test\*.c
+    cc -O0 -Wpedantic -Wall -Werror -nostartfiles -ffreestanding -T $srcDir\link.ld -march=armv6 -std=c11 -o $objDir\kernel.elf $srcDir\*.s $srcDir\*.c $srcDir\test\*.c
+    if ($LastExitCode -ne 0) {
+        throw 'Error while building kernel'
+    }
     objdump -D $objDir\kernel.elf > $objDir\kernel.elf.list
     objcopy -O binary $objDir\kernel.elf $objDir\kernel.img
 }
@@ -71,9 +74,15 @@ function Build-Bootloader {
         Remove-Item -Force -Recurse -Path $objDir
     }
     mkdir $objDir > $null
-    cc -O0 -Wpedantic -Wall -ffreestanding -c -march=armv6 -std=gnu11 $srcDir\*.s $srcDir\*.c
+    cc -O0 -Wpedantic -Wall -Werror -ffreestanding -c -march=armv6 -std=gnu11 $srcDir\*.s $srcDir\*.c
+    if ($LastExitCode -ne 0) {
+        throw 'Error while compiling bootloader'
+    }
     mv *.o $objDir
     ld -T $srcDir\link.ld -o $objDir\bootloader.elf $objDir\*.o
+    if ($LastExitCode -ne 0) {
+        throw 'Error while linking bootloader'
+    }
     objdump -D $objDir\bootloader.elf > $objDir\bootloader.elf.list
     objcopy -O binary $objDir\bootloader.elf $objDir\bootloader.img
     $bootloaderSize = (Get-ChildItem $objDir\bootloader.img).Length
