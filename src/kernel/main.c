@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <string.h>
 
+// #include "asteroid.h"
 #include "calc.h"
 #include "cpu.h"
 #include "keyecho.h"
@@ -20,7 +21,7 @@ static void hang(void) {
     }
 }
 
-void kernel_main(void) {
+void main(void) {
     // Run unit tests
     if (!test_stdio()) {
         puts("test_stdio failed");
@@ -45,9 +46,12 @@ void kernel_main(void) {
         if (strcmp("help", command_line) == 0) {
             printf(
                 "Commands:\r\n"
+                "  asteroid\r\n"
                 "  calc\r\n"
                 "  help\r\n"
                 "  keyecho\r\n");
+        } else if (strcmp("asteroid", command_line) == 0) {
+            // asteroid_main();
         } else if (strcmp("calc", command_line) == 0) {
             calc_main();
         } else if (strcmp("keyecho", command_line) == 0) {

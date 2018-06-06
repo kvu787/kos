@@ -26,6 +26,15 @@ int getchar_silent(void) {
     return uart_getchar();
 }
 
+int try_getchar_silent(void) {
+    int i = uart_try_getchar();
+    if (i == -1) {
+        return -2;
+    } else {
+        return i;
+    }
+}
+
 char *gets(char *str, size_t n) {
     while (n > 0) {
         *str++ = getchar();
@@ -211,6 +220,10 @@ int printf(const char *format, ...) {
             while (*string) {
                 putchar(*string++);
             }
+            format += 2;
+        } else if (strncmp("%c", format, 2) == 0) {
+            char c = va_arg(args, int);
+            putchar(c);
             format += 2;
         } else if (strncmp("%%", format, 2) == 0) {
             putchar('%');

@@ -13,6 +13,12 @@ int getchar(void);
 // < -1 on error
 int getchar_silent(void);
 
+// >= 0 on success
+// = -1 on EOF
+// = -2 if no character available
+// < -2 on error
+int try_getchar_silent(void);
+
 // NULL on error
 char *gets(char *str, size_t n);
 
@@ -39,6 +45,8 @@ int scanf(const char *format, ...);
 // -1 if format does not match input
 int sscanf(const char *str, const char *format, ...);
 
+// Supports %d, %u, %s, %c, %%.
+//
 // >= 0 on success
 // < 0 on error
 int printf(const char *format, ...);
