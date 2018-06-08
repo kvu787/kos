@@ -12,6 +12,7 @@
 
 #include "test/cpu_test.h"
 #include "test/stdio_test.h"
+#include "test/varg_test.h"
 
 #define COMMAND_LINE_SIZE 200
 
@@ -28,6 +29,10 @@ void kernel_main(void) {
     }
     if (!test_cpu()) {
         puts("test_cpu failed");
+        hang();
+    }
+    if (!varg_test()) {
+        puts("varg_test failed");
         hang();
     }
 
