@@ -7,4 +7,10 @@
 #define KEY_ESCAPE 27
 #define KEY_ENTER 13
 
+#define KEY_w 119
+#define KEY_a 97
+#define KEY_s 115
+#define KEY_d 100
+
+
 #endif // VT100_H_
