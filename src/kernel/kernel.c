@@ -52,11 +52,18 @@ void kernel_main(void) {
                 "Commands:\r\n"
                 "  calc\r\n"
                 "  help\r\n"
-                "  keyecho\r\n");
+                "  keyecho\r\n"
+                "  test_stdio_interactive\r\n");
         } else if (strcmp("calc", command_line) == 0) {
             calc_main();
         } else if (strcmp("keyecho", command_line) == 0) {
             keyecho_main();
+        } else if (strcmp("test_stdio_interactive", command_line) == 0) {
+            if (test_stdio_interactive()) {
+                puts("test_stdio_interactive passed");
+            } else {
+                puts("test_stdio_interactive failed");
+            }
         } else {
             puts("Unrecognized command.");
         }

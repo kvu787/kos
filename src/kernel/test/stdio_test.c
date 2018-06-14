@@ -8,8 +8,16 @@ static bool test_sscanf(void);
 static void test_stdio_output(void);
 static bool test_stdio_input(void);
 
-bool test_stdio() {
+bool test_stdio(void) {
     if (!test_sscanf()) {
+        return false;
+    }
+    return true;
+}
+
+bool test_stdio_interactive(void) {
+    test_stdio_output();
+    if (!test_stdio_input()) {
         return false;
     }
     return true;
@@ -128,7 +136,6 @@ static bool test_sscanf(void) {
     return true;
 }
 
-__attribute__((unused))
 static bool test_stdio_input() {
     puts("* Test getchar");
     puts("Press the ! key. You should see it echoed back.");
@@ -186,7 +193,6 @@ static bool test_stdio_input() {
     return true;
 }
 
-__attribute__((unused))
 static void test_stdio_output(void) {
     puts("* Test putchar");
     putchar('p');

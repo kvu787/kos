@@ -1,13 +1,13 @@
 #include "stdio.h"
 
 #include <ctype.h>
-#include <stdarg.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 
 #include "math.h"
 #include "uart.h"
+#include "varg.h"
 
 static const int DOUBLE_PRECISION = 2;
 
@@ -77,7 +77,7 @@ int puts(const char *str) {
 // 
 // Precondition: the character stream is not shorter than format
 // ^TODO: handle EOF properly
-static int vscanf(int (*getchar_f)(void), const char *format, va_list args) {
+static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) {
     // invariants
     // 
     // format: advance as input is parsed
@@ -104,11 +104,11 @@ static int vscanf(int (*getchar_f)(void), const char *format, va_list args) {
                 u += c - '0';
                 c = (char) getchar_f();
             }
-            unsigned long *out_u = va_arg(args, unsigned long *);
+            unsigned long *out_u = varg_next(args, unsigned long *);
             *out_u = u;
             format += 2;
         } else if (strncmp("%s", format, 2) == 0) {
-            char *string = va_arg(args, char *);
+            char *string = varg_next(args, char *);
             // get all [^\s\x0]
             while (c != '\0' && !isspace(c)) {
                 *string++ = c;
@@ -140,10 +140,8 @@ static int vscanf(int (*getchar_f)(void), const char *format, va_list args) {
 
 int scanf(const char *format, ...) {
     int (*getchar_f)(void) = &getchar;
-    va_list args;
-    va_start(args, format);
+    varg_data_t args = varg_init(format);
     int return_value = vscanf(getchar_f, format, args);
-    va_end(args);
     return return_value;
 }
 
@@ -168,19 +166,16 @@ static int (*generate_sgetchar(const char *string))(void) {
 
 int sscanf(const char *str, const char *format, ...) {
     int (*getchar_f)(void) = generate_sgetchar(str);
-    va_list args;
-    va_start(args, format);
+    varg_data_t args = varg_init(format);
     int return_value = vscanf(getchar_f, format, args);
-    va_end(args);
     return return_value;
 }
 
 int printf(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
+    varg_data_t args = varg_init(format);
     while (*format) {
         if (strncmp("%d", format, 2) == 0) {
-            double d = va_arg(args, double);
+            double d = varg_next(args, double);
             // Handle negatives
             if (d < 0) {
                 putchar('-');
@@ -199,7 +194,7 @@ int printf(const char *format, ...) {
             }
             format += 2;
         } else if (strncmp("%u", format, 2) == 0) {
-            unsigned long ul = va_arg(args, unsigned long);
+            unsigned long ul = varg_next(args, unsigned long);
             for (unsigned long i = get_num_digits(ul); i > 0; --i) {
                 unsigned long digit = get_ith_digit(ul, i - 1);
                 char c = ((char) digit) + '0';
@@ -207,7 +202,7 @@ int printf(const char *format, ...) {
             }
             format += 2;
         } else if (strncmp("%s", format, 2) == 0) {
-            char *string = va_arg(args, char *);
+            char *string = varg_next(args, char *);
             while (*string) {
                 putchar(*string++);
             }
@@ -220,6 +215,5 @@ int printf(const char *format, ...) {
             ++format;
         }
     }
-    va_end(args);
     return 0;
 }

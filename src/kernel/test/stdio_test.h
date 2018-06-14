@@ -4,5 +4,6 @@
 #include <stdbool.h>
 
 bool test_stdio(void);
+bool test_stdio_interactive(void);
 
 #endif // TEST_STDIO_H_
