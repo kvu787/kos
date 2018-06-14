@@ -27,26 +27,19 @@ This example shows how arguments move from registers onto a stack:
 typedef unsigned varg_data_t;
 
 // Arguments are 4-byte aligned on the stack.
-#define __size_on_stack(var) \
-    ((sizeof(var) + 3) & ~3)
+#define __sizeof_align4(object) \
+    ((sizeof(object) + 3) & ~3)
 
 // varg_start must be called before calling varg_next.
 // arg is the name of the argument before the ...
-#define varg_start(varg_data, arg) \
-    varg_data = (unsigned) (((char *) &arg) + __size_on_stack(arg))
+#define varg_init(arg) \
+    ((unsigned) (((char *) &arg) + __sizeof_align4(arg)))
 
 // varg_next accesses the next variadic argument.
 // The type of the argument must be specified.
-//
-// TODO: For some reason, 8 byte types such as "unsigned long long" are 8-byte
-// aligned, which produces padding on the stack, while large structs are
-// unaligned. So for now this only supports types up to 4 bytes in size.
 #define varg_next(varg_data, type) \
-    ( \
-        (sizeof(type) > 4) ? panic_with_return( \
-            "varg argument type must not exceed 4 bytes") : 0, \
-        varg_data += __size_on_stack(type), \
-        (type) *((type *) (varg_data - __size_on_stack(type))) \
-    )
+    (*((type *) __varg_next(&varg_data, __sizeof_align4(type), #type)))
+
+void *__varg_next(varg_data_t *p_varg_data, int size, char *type_name);
 
 #endif // VARG_H_
