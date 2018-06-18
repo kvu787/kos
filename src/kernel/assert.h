@@ -1,10 +1,12 @@
 #ifndef ASSERT_H_
 #define ASSERT_H_
 
+#include "kos.h"
 #include "stdio.h"
 
-#define assert(expr) \
-    printf("Assert failed with expression " #expr " in %s:%u, %s\r\n", \
-        __FILE__, (unsigned long) __LINE__, __func__)
+#define assert(expr) (__assert(expr, #expr, __FILE__, __LINE__, __func__))
+
+void __assert(bool_t ok, string_t expr, string_t file, uint_t line,
+    string_t func);
 
 #endif // ASSERT_H_

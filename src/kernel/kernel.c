@@ -7,6 +7,7 @@
 #include "calc.h"
 #include "cpu.h"
 #include "keyecho.h"
+#include "kos.h"
 #include "math.h"
 #include "stdio.h"
 #include "uart.h"
@@ -70,5 +71,5 @@ void kernel_main(void) {
         }
     }
 
-    assert(0);
+    assert(FALSE);
 }
