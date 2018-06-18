@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <string.h>
 
+#include "assert.h"
 #include "calc.h"
 #include "cpu.h"
 #include "keyecho.h"
@@ -68,4 +69,6 @@ void kernel_main(void) {
             puts("Unrecognized command.");
         }
     }
+
+    assert(0);
 }
