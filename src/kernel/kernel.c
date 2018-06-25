@@ -1,7 +1,6 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <string.h>
 
 #include "assert.h"
 #include "calc.h"
@@ -10,10 +9,12 @@
 #include "kos.h"
 #include "math.h"
 #include "stdio.h"
+#include "string.h"
 #include "uart.h"
 
 #include "test/cpu_test.h"
 #include "test/stdio_test.h"
+#include "test/string_test.h"
 #include "test/varg_test.h"
 
 #define COMMAND_LINE_SIZE 200
@@ -37,6 +38,7 @@ void kernel_main(void) {
         puts("varg_test failed");
         hang();
     }
+    string_test();
 
     // Print startup greeting
     puts("Hello, welcome to kos.");
@@ -49,18 +51,18 @@ void kernel_main(void) {
             printf("\r\nCommand too long. Max size is %u\r\n.", COMMAND_LINE_SIZE-1);
             continue;
         }
-        if (strcmp("help", command_line) == 0) {
+        if (string_equals("help", command_line)) {
             printf(
                 "Commands:\r\n"
                 "  calc\r\n"
                 "  help\r\n"
                 "  keyecho\r\n"
                 "  test_stdio_interactive\r\n");
-        } else if (strcmp("calc", command_line) == 0) {
+        } else if (string_equals("calc", command_line)) {
             calc_main();
-        } else if (strcmp("keyecho", command_line) == 0) {
+        } else if (string_equals("keyecho", command_line)) {
             keyecho_main();
-        } else if (strcmp("test_stdio_interactive", command_line) == 0) {
+        } else if (string_equals("test_stdio_interactive", command_line)) {
             if (test_stdio_interactive()) {
                 puts("test_stdio_interactive passed");
             } else {

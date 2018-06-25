@@ -3,9 +3,9 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <string.h>
 
 #include "math.h"
+#include "string.h"
 #include "uart.h"
 #include "varg.h"
 
@@ -96,7 +96,7 @@ static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) 
         if (c < 0) {
             c = (char) getchar_f();
         }
-        if (strncmp("%u", format, 2) == 0) {
+        if (string_starts_with(format, "%u")) {
             // get digits
             unsigned long u = 0;
             while ('0' <= c && c <= '9') {
@@ -107,7 +107,7 @@ static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) 
             unsigned long *out_u = varg_next(args, unsigned long *);
             *out_u = u;
             format += 2;
-        } else if (strncmp("%s", format, 2) == 0) {
+        } else if (string_starts_with(format, "%s")) {
             char *string = varg_next(args, char *);
             // get all [^\s\x0]
             while (c != '\0' && !isspace(c)) {
@@ -116,7 +116,7 @@ static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) 
             }
             *string = '\0';
             format += 2;
-        } else if (strncmp("%%", format, 2) == 0) {
+        } else if (string_starts_with(format, "%%")) {
             if (c == '%') {
                 format += 2;
                 c = -1;
@@ -174,7 +174,7 @@ int sscanf(const char *str, const char *format, ...) {
 int printf(const char *format, ...) {
     varg_data_t args = varg_init(format);
     while (*format) {
-        if (strncmp("%d", format, 2) == 0) {
+        if (string_starts_with(format, "%d")) {
             double d = varg_next(args, double);
             // Handle negatives
             if (d < 0) {
@@ -193,7 +193,7 @@ int printf(const char *format, ...) {
                 printf("%u", (unsigned long) fractional);
             }
             format += 2;
-        } else if (strncmp("%u", format, 2) == 0) {
+        } else if (string_starts_with(format, "%u")) {
             unsigned long ul = varg_next(args, unsigned long);
             for (unsigned long i = get_num_digits(ul); i > 0; --i) {
                 unsigned long digit = get_ith_digit(ul, i - 1);
@@ -201,13 +201,13 @@ int printf(const char *format, ...) {
                 putchar(c);
             }
             format += 2;
-        } else if (strncmp("%s", format, 2) == 0) {
+        } else if (string_starts_with(format, "%s")) {
             char *string = varg_next(args, char *);
             while (*string) {
                 putchar(*string++);
             }
             format += 2;
-        } else if (strncmp("%%", format, 2) == 0) {
+        } else if (string_starts_with(format, "%%")) {
             putchar('%');
             format += 2;
         } else {

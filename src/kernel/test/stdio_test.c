@@ -205,10 +205,12 @@ static void test_stdio_output(void) {
     puts("pass");
 
     puts("* Test printf");
-    puts("You should see the following 3 lines repeated twice.");
+    puts("You should see the following 5 lines repeated twice.");
     puts("hello");
     puts("hello world");
     puts("hello 1 world 2 !");
+    puts("pi = 3.14");
+    puts("double = -8.19");
     printf("hello\r\n");
     printf("hello %s\r\n", "world");
     printf("hello %u %s %u !\r\n", 1, "world", 2);
