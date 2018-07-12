@@ -1,4 +1,3 @@
-#include <ctype.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -12,6 +11,7 @@
 #include "string.h"
 #include "uart.h"
 
+#include "test/char_test.h"
 #include "test/cpu_test.h"
 #include "test/memory_test.h"
 #include "test/stdio_test.h"
@@ -41,6 +41,7 @@ void kernel_main(void) {
     }
     memory_test();
     string_test();
+    char_test();
 
     // Print startup greeting
     puts("Hello, welcome to kos.");

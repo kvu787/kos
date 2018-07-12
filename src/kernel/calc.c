@@ -1,8 +1,8 @@
 #include "calc.h"
 
-#include <ctype.h>
 #include <stdbool.h>
 
+#include "char.h"
 #include "math.h"
 #include "stdio.h"
 #include "vt100.h"
@@ -50,8 +50,8 @@ static unsigned long rpn(char *expression) {
     // spaces, operators, integers, \0
     while (true) {
         char c = *expression;
-        if (isspace(c)) {
-            while (isspace(*expression)) {
+        if (is_whitespace(c)) {
+            while (is_whitespace(*expression)) {
                 ++expression;
             }
         } else if (c == '+' || c == '*') {
@@ -63,7 +63,7 @@ static unsigned long rpn(char *expression) {
             }
             ++stack;
             ++expression;
-        } else if (isdigit(c)) {
+        } else if (is_digit(c)) {
             unsigned long n;
             sscanf(expression, "%u", &n);
             *stack++ = n;

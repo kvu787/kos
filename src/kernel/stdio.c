@@ -1,9 +1,9 @@
 #include "stdio.h"
 
-#include <ctype.h>
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "char.h"
 #include "math.h"
 #include "string.h"
 #include "uart.h"
@@ -99,7 +99,7 @@ static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) 
         if (string_starts_with(format, "%u")) {
             // get digits
             unsigned long u = 0;
-            while ('0' <= c && c <= '9') {
+            while (is_digit(c)) {
                 u *= 10;
                 u += c - '0';
                 c = (char) getchar_f();
@@ -110,7 +110,7 @@ static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) 
         } else if (string_starts_with(format, "%s")) {
             char *string = varg_next(args, char *);
             // get all [^\s\x0]
-            while (c != '\0' && !isspace(c)) {
+            while (is_printable(c)) {
                 *string++ = c;
                 c = (char) getchar_f();
             }
