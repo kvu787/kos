@@ -13,6 +13,7 @@
 #include "uart.h"
 
 #include "test/cpu_test.h"
+#include "test/memory_test.h"
 #include "test/stdio_test.h"
 #include "test/string_test.h"
 #include "test/varg_test.h"
@@ -38,6 +39,7 @@ void kernel_main(void) {
         puts("varg_test failed");
         hang();
     }
+    memory_test();
     string_test();
 
     // Print startup greeting

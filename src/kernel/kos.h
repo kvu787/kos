@@ -4,6 +4,7 @@
 // Defines standard types used in kos.
 
 typedef char char_t;
+typedef unsigned char byte_t;
 typedef signed int int_t;
 typedef unsigned int uint_t;
 typedef unsigned char bool_t;

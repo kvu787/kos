@@ -1,3 +1,5 @@
+#include "string_test.h"
+
 #include "../assert.h"
 #include "../string.h"
 

@@ -1,7 +1,6 @@
 #include "stdio_test.h"
 
-#include <string.h>
-
+#include "../memory.h"
 #include "../stdio.h"
 
 static bool test_sscanf(void);
@@ -29,8 +28,8 @@ static bool test_sscanf(void) {
     unsigned long u1;
     unsigned long u2;
 
-    memset(string1, 1, 10);
-    memset(string2, 1, 10);
+    memory_set(string1, 10, 1);
+    memory_set(string2, 10, 1);
     u1 = 0;
     u2 = 0;
     sscanf("112", "%u", &u1);
@@ -39,12 +38,12 @@ static bool test_sscanf(void) {
         return false;
     }
 
-    memset(string1, 1, 10);
-    memset(string2, 1, 10);
+    memory_set(string1, 10, 1);
+    memory_set(string2, 10, 1);
     u1 = 0;
     u2 = 0;
     sscanf("hello 1 % world 2", "%s %u %% %s %u", string1, &u1, string2, &u2);
-    if (memcmp(string1, "hello\0", 6) != 0) {
+    if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
         return false;
     }
@@ -52,7 +51,7 @@ static bool test_sscanf(void) {
         puts("fail: Did not receive 1");
         return false;
     }
-    if (memcmp(string2, "world\0", 6) != 0) {
+    if (!memory_equals(string2, "world\0", 6)) {
         puts("fail: Did not receive world");
         return false;
     }
@@ -63,18 +62,18 @@ static bool test_sscanf(void) {
 
     sscanf("hello%", "hello%%");
 
-    memset(string1, 1, 10);
-    memset(string2, 1, 10);
+    memory_set(string1, 10, 1);
+    memory_set(string2, 10, 1);
     u1 = 0;
     u2 = 0;
     sscanf("hello\r", "%s\r", string1);
-    if (memcmp(string1, "hello\0", 6)) {
+    if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
         return false;
     }
 
-    memset(string1, 1, 10);
-    memset(string2, 1, 10);
+    memory_set(string1, 10, 1);
+    memory_set(string2, 10, 1);
     u1 = 0;
     u2 = 0;
     sscanf("1\r", "%u\r", &u1);
@@ -83,12 +82,12 @@ static bool test_sscanf(void) {
         return false;
     }
 
-    memset(string1, 1, 10);
-    memset(string2, 1, 10);
+    memory_set(string1, 10, 1);
+    memory_set(string2, 10, 1);
     u1 = 0;
     u2 = 0;
     sscanf("hello 1 world 2 \r", "%s 1 world %u\r", string1, &u1);
-    if (memcmp(string1, "hello\0", 6) != 0) {
+    if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
         return false;
     }
@@ -97,8 +96,8 @@ static bool test_sscanf(void) {
         return false;
     }
 
-    memset(string1, 1, 10);
-    memset(string2, 1, 10);
+    memory_set(string1, 10, 1);
+    memory_set(string2, 10, 1);
     u1 = 0;
     u2 = 0;
     sscanf("hello 1 world 2\r", "hello %u %s 2\r", &u1, string1);
@@ -106,17 +105,17 @@ static bool test_sscanf(void) {
         puts("fail: Did not receive 1");
         return false;
     }
-    if (memcmp(string1, "world\0", 6) != 0) {
+    if (!memory_equals(string1, "world\0", 6)) {
         puts("fail: Did not receive world");
         return false;
     }
 
-    memset(string1, 1, 10);
-    memset(string2, 1, 10);
+    memory_set(string1, 10, 1);
+    memory_set(string2, 10, 1);
     u1 = 0;
     u2 = 0;
     sscanf("hello 1 world 2\r", "%s %u %s %u\r", string1, &u1, string2, &u2);
-    if (memcmp(string1, "hello\0", 6) != 0) {
+    if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
         return false;
     }
@@ -124,7 +123,7 @@ static bool test_sscanf(void) {
         puts("fail: Did not receive 1");
         return false;
     }
-    if (memcmp(string2, "world\0", 6) != 0) {
+    if (!memory_equals(string2, "world\0", 6)) {
         puts("fail: Did not receive world");
         return false;
     }
@@ -152,7 +151,7 @@ static bool test_stdio_input() {
     char string[6];
     gets(string, 5);
     puts("");
-    if (memcmp(string, "hello\0", 6) != 0) {
+    if (!memory_equals(string, "hello\0", 6)) {
         puts("fail: Received wrong characters");
         return false;
     }
@@ -165,12 +164,12 @@ static bool test_stdio_input() {
     unsigned long u2;
 
     puts("Type hello 1 world 2 and press ENTER. You should see it echoed back.");
-    memset(string1, 1, 10);
-    memset(string2, 1, 10);
+    memory_set(string1, 10, 1);
+    memory_set(string2, 10, 1);
     u1 = 0;
     u2 = 0;
     scanf("%s %u %s %u\r", string1, &u1, string2, &u2);
-    if (memcmp(string1, "hello\0", 6) != 0) {
+    if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
         return false;
     }
@@ -178,7 +177,7 @@ static bool test_stdio_input() {
         puts("fail: Did not receive 1");
         return false;
     }
-    if (memcmp(string2, "world\0", 6) != 0) {
+    if (!memory_equals(string2, "world\0", 6)) {
         puts("fail: Did not receive world");
         return false;
     }
