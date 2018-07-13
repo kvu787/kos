@@ -1,7 +1,7 @@
 #include "memory_test.h"
 
 #include "../assert.h"
-#include "../kos.h"
+#include "../types.h"
 #include "../memory.h"
 #include "../string.h"
 

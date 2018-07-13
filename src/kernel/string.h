@@ -1,7 +1,7 @@
 #ifndef STRING_H_
 #define STRING_H_
 
-#include "kos.h"
+#include "types.h"
 
 uint_t string_size(string_t string);
 bool_t string_equals(string_t a, string_t b);

@@ -5,7 +5,7 @@
 #include "calc.h"
 #include "cpu.h"
 #include "keyecho.h"
-#include "kos.h"
+#include "types.h"
 #include "math.h"
 #include "stdio.h"
 #include "string.h"

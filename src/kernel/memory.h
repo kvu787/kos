@@ -1,7 +1,7 @@
 #ifndef MEMORY_H_
 #define MEMORY_H_
 
-#include "kos.h"
+#include "types.h"
 
 bool_t memory_equals(void *a, void *b, uint_t size);
 void memory_set(void *start, uint_t size, byte_t value);

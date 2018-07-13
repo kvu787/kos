@@ -1,5 +1,5 @@
-#ifndef KOS_H_
-#define KOS_H_
+#ifndef TYPES_H_
+#define TYPES_H_
 
 // Defines standard types used in kos.
 
@@ -13,4 +13,4 @@ typedef const char_t *string_t;
 #define TRUE 1
 #define FALSE 0
 
-#endif // KOS_H_
+#endif // TYPES_H_
