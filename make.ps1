@@ -59,7 +59,7 @@ function Build-Kernel {
         Remove-Item -Force -Recurse -Path $objDir
     }
     mkdir $objDir > $null
-    cc -O0 -Wpedantic -Wall -Werror -nostartfiles -ffreestanding -T $srcDir\link.ld -march=armv6 -std=c11 -o $objDir\kernel.elf $srcDir\*.s $srcDir\*.c $srcDir\test\*.c
+    cc -O0 -Wpedantic -Wall -Werror -nostdlib -ffreestanding -T $srcDir\link.ld -march=armv6 -std=c11 -o $objDir\kernel.elf $srcDir\*.s $srcDir\*.c $srcDir\test\*.c -lgcc
     if ($LastExitCode -ne 0) {
         throw 'Error while building kernel'
     }
