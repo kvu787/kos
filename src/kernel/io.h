@@ -1,7 +1,7 @@
 #ifndef STDIO_H_
 #define STDIO_H_
 
-#include <stddef.h>
+#include "types.h"
 
 // >= 0 on success
 // = -1 on EOF
@@ -14,14 +14,14 @@ int getchar(void);
 int getchar_silent(void);
 
 // NULL on error
-char *gets(char *str, size_t n);
+char *gets(char *str, uint_t n);
 
 // Reads up to (size - 1) characters of user input until ENTER is sent.
 // size = size of buffer
 // Returns
 //   buffer
 //   Or NULL if user input exceeds buffer size.
-char *getline(char *buffer, size_t size);
+char *getline(char *buffer, uint_t size);
 
 // >= 0 on success
 // < 0 on error

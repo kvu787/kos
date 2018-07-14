@@ -1,6 +1,3 @@
-#include <stdbool.h>
-#include <stddef.h>
-
 #include "assert.h"
 #include "calc.h"
 #include "io.h"
@@ -21,7 +18,7 @@
 #define COMMAND_LINE_SIZE 200
 
 static void hang(void) {
-    while (true) {
+    while (TRUE) {
     }
 }
 
@@ -47,7 +44,7 @@ void kernel_main(void) {
     puts("Hello, welcome to kos.");
 
     // Start shell
-    while (true) {
+    while (TRUE) {
         printf("> ");
         char command_line[COMMAND_LINE_SIZE];
         if (getline(command_line, COMMAND_LINE_SIZE) == NULL) {

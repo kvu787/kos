@@ -1,10 +1,9 @@
 #include "calc.h"
 
-#include <stdbool.h>
-
 #include "char.h"
 #include "io.h"
 #include "math.h"
+#include "types.h"
 #include "vt100.h"
 
 // Evaluates an reverse polish notation expression, such as "2 11 + 17 5 * *".
@@ -13,8 +12,8 @@ static unsigned long rpn(char *expression);
 #define COMMAND_LINE_SIZE 200
 
 void calc_main(void) {
-    while (true) {
-        while (true) {
+    while (TRUE) {
+        while (TRUE) {
             puts("Press ENTER to continue or ESC to exit.");
             char c = getchar_silent();
             if (c == KEY_ENTER) {
@@ -48,7 +47,7 @@ static unsigned long rpn(char *expression) {
     //
     // Each iteration handles a token, which is one of:
     // spaces, operators, integers, \0
-    while (true) {
+    while (TRUE) {
         char c = *expression;
         if (is_whitespace(c)) {
             while (is_whitespace(*expression)) {

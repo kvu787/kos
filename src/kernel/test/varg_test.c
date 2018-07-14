@@ -10,14 +10,14 @@ static float float4b = 181.38192;
 static double double8b = 2.1728;
 
 #define _check(type, expected) \
-    if (varg_next(varg_data, type) != expected) { return false; }
+    if (varg_next(varg_data, type) != expected) { return FALSE; }
 
-static bool numeric_4_byte_function(int a, char b, ...) {
+static bool_t numeric_4_byte_function(int a, char b, ...) {
     if (a != 0) {
-        return false;
+        return FALSE;
     }
     if (b != 1) {
-        return false;
+        return FALSE;
     }
     varg_data_t varg_data = varg_init(b);
     _check(int, 2);
@@ -31,20 +31,20 @@ static bool numeric_4_byte_function(int a, char b, ...) {
     _check(unsigned, var4b);
     _check(int, 8);
     _check(int, 9);
-    return true;
+    return TRUE;
 }
 
-static bool numeric_4_byte_test(void) {
+static bool_t numeric_4_byte_test(void) {
     return numeric_4_byte_function(
         0, 1, 2, 3, var1b, 4, 5, var2b, 6, 7, var4b, 8, 9);
 }
 
-static bool numeric_8_byte_function(int a, char b, ...) {
+static bool_t numeric_8_byte_function(int a, char b, ...) {
     if (a != 0) {
-        return false;
+        return FALSE;
     }
     if (b != 1) {
-        return false;
+        return FALSE;
     }
     varg_data_t varg_data = varg_init(b);
 
@@ -61,16 +61,16 @@ static bool numeric_8_byte_function(int a, char b, ...) {
     _check(double, float4b);
     _check(unsigned long long, int8b);
 
-    return true;
+    return TRUE;
 }
 
-static bool numeric_8_byte_test(void) {
+static bool_t numeric_8_byte_test(void) {
     return numeric_8_byte_function(
         0, 1, 2, double8b, 3, float4b, 4, int8b,
         double8b, float4b, int8b);
 }
 
-bool varg_test(void) {
+bool_t varg_test(void) {
     return 
         numeric_4_byte_test()
         && numeric_8_byte_test();

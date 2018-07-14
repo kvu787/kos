@@ -1,11 +1,9 @@
 #include "io.h"
 
-#include <stdbool.h>
-#include <stdint.h>
-
 #include "char.h"
 #include "math.h"
 #include "string.h"
+#include "types.h"
 #include "uart.h"
 #include "varg.h"
 
@@ -26,7 +24,7 @@ int getchar_silent(void) {
     return uart_getchar();
 }
 
-char *gets(char *str, size_t n) {
+char *gets(char *str, uint_t n) {
     while (n > 0) {
         *str++ = getchar();
         --n;
@@ -35,13 +33,13 @@ char *gets(char *str, size_t n) {
     return str;
 }
 
-char *getline(char *buffer, size_t size) {
+char *getline(char *buffer, uint_t size) {
     --size;
-    bool hasReceivedEnter = false;
+    bool_t hasReceivedEnter = FALSE;
     while (size > 0 && !hasReceivedEnter) {
         char c = getchar();
         if (c == '\r') {
-            hasReceivedEnter = true;
+            hasReceivedEnter = TRUE;
         } else {
             *buffer++ = c;
             --size;

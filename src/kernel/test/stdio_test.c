@@ -3,26 +3,26 @@
 #include "../io.h"
 #include "../memory.h"
 
-static bool test_sscanf(void);
+static bool_t test_sscanf(void);
 static void test_stdio_output(void);
-static bool test_stdio_input(void);
+static bool_t test_stdio_input(void);
 
-bool test_stdio(void) {
+bool_t test_stdio(void) {
     if (!test_sscanf()) {
-        return false;
+        return FALSE;
     }
-    return true;
+    return TRUE;
 }
 
-bool test_stdio_interactive(void) {
+bool_t test_stdio_interactive(void) {
     test_stdio_output();
     if (!test_stdio_input()) {
-        return false;
+        return FALSE;
     }
-    return true;
+    return TRUE;
 }
 
-static bool test_sscanf(void) {
+static bool_t test_sscanf(void) {
     char string1[10];
     char string2[10];
     unsigned long u1;
@@ -35,7 +35,7 @@ static bool test_sscanf(void) {
     sscanf("112", "%u", &u1);
     if (u1 != 112) {
         puts("fail: Did not receive 112");
-        return false;
+        return FALSE;
     }
 
     memory_set(string1, 10, 1);
@@ -45,19 +45,19 @@ static bool test_sscanf(void) {
     sscanf("hello 1 % world 2", "%s %u %% %s %u", string1, &u1, string2, &u2);
     if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
-        return false;
+        return FALSE;
     }
     if (u1 != 1) {
         puts("fail: Did not receive 1");
-        return false;
+        return FALSE;
     }
     if (!memory_equals(string2, "world\0", 6)) {
         puts("fail: Did not receive world");
-        return false;
+        return FALSE;
     }
     if (u2 != 2) {
         puts("fail: Did not receive 2");
-        return false;
+        return FALSE;
     }
 
     sscanf("hello%", "hello%%");
@@ -69,7 +69,7 @@ static bool test_sscanf(void) {
     sscanf("hello\r", "%s\r", string1);
     if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
-        return false;
+        return FALSE;
     }
 
     memory_set(string1, 10, 1);
@@ -79,7 +79,7 @@ static bool test_sscanf(void) {
     sscanf("1\r", "%u\r", &u1);
     if (u1 != 1) {
         puts("fail: Did not receive 1");
-        return false;
+        return FALSE;
     }
 
     memory_set(string1, 10, 1);
@@ -89,11 +89,11 @@ static bool test_sscanf(void) {
     sscanf("hello 1 world 2 \r", "%s 1 world %u\r", string1, &u1);
     if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
-        return false;
+        return FALSE;
     }
     if (u1 != 2) {
         puts("fail: Did not receive 2");
-        return false;
+        return FALSE;
     }
 
     memory_set(string1, 10, 1);
@@ -103,11 +103,11 @@ static bool test_sscanf(void) {
     sscanf("hello 1 world 2\r", "hello %u %s 2\r", &u1, string1);
     if (u1 != 1) {
         puts("fail: Did not receive 1");
-        return false;
+        return FALSE;
     }
     if (!memory_equals(string1, "world\0", 6)) {
         puts("fail: Did not receive world");
-        return false;
+        return FALSE;
     }
 
     memory_set(string1, 10, 1);
@@ -117,32 +117,32 @@ static bool test_sscanf(void) {
     sscanf("hello 1 world 2\r", "%s %u %s %u\r", string1, &u1, string2, &u2);
     if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
-        return false;
+        return FALSE;
     }
     if (u1 != 1) {
         puts("fail: Did not receive 1");
-        return false;
+        return FALSE;
     }
     if (!memory_equals(string2, "world\0", 6)) {
         puts("fail: Did not receive world");
-        return false;
+        return FALSE;
     }
     if (u2 != 2) {
         puts("fail: Did not receive 2");
-        return false;
+        return FALSE;
     }
 
-    return true;
+    return TRUE;
 }
 
-static bool test_stdio_input() {
+static bool_t test_stdio_input() {
     puts("* Test getchar");
     puts("Press the ! key. You should see it echoed back.");
     char c = getchar();
     puts("");
     if (c != '!') {
         puts("fail: Received wrong character");
-        return false;
+        return FALSE;
     }
     puts("pass");
 
@@ -153,7 +153,7 @@ static bool test_stdio_input() {
     puts("");
     if (!memory_equals(string, "hello\0", 6)) {
         puts("fail: Received wrong characters");
-        return false;
+        return FALSE;
     }
 
     puts("* Test scanf");
@@ -171,25 +171,25 @@ static bool test_stdio_input() {
     scanf("%s %u %s %u\r", string1, &u1, string2, &u2);
     if (!memory_equals(string1, "hello\0", 6)) {
         puts("fail: Did not receive hello");
-        return false;
+        return FALSE;
     }
     if (u1 != 1) {
         puts("fail: Did not receive 1");
-        return false;
+        return FALSE;
     }
     if (!memory_equals(string2, "world\0", 6)) {
         puts("fail: Did not receive world");
-        return false;
+        return FALSE;
     }
     if (u2 != 2) {
         puts("fail: Did not receive 2");
-        return false;
+        return FALSE;
     }
 
     puts("Press the ! key. You should not see it echoed back");
     getchar_silent();
 
-    return true;
+    return TRUE;
 }
 
 static void test_stdio_output(void) {

@@ -1,12 +1,11 @@
 #include "panic.h"
 
-#include <stdbool.h>
-
 #include "io.h"
+#include "types.h"
 
 void panic(char *string) {
     printf(string);
-    while (true) {
+    while (TRUE) {
     }
 }
 

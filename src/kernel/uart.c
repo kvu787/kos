@@ -1,9 +1,9 @@
 #include "uart.h"
 
-#include <stdint.h>
+#include "types.h"
 
-static uint32_t *const AUX_MU_IO_REG = (uint32_t *)   0x20215040;
-static uint32_t *const AUX_MU_LSR_REG = (uint32_t *)  0x20215054;
+static uint_t *const AUX_MU_IO_REG = (uint_t *)  0x20215040;
+static uint_t *const AUX_MU_LSR_REG = (uint_t *) 0x20215054;
 
 char uart_getchar(void) {
     // Wait until receive FIFO is not empty

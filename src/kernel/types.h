@@ -12,5 +12,6 @@ typedef const char_t *string_t;
 
 #define TRUE 1
 #define FALSE 0
+#define NULL ((void *) 0)
 
 #endif // TYPES_H_
