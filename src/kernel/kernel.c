@@ -57,11 +57,14 @@ void kernel_main(void) {
                 "  calc\r\n"
                 "  help\r\n"
                 "  keyecho\r\n"
+                "  random\r\n"
                 "  test_stdio_interactive\r\n");
         } else if (string_equals("calc", command_line)) {
             calc_main();
         } else if (string_equals("keyecho", command_line)) {
             keyecho_main();
+        } else if (string_equals("random", command_line)) {
+            printf("%u\r\n", random());
         } else if (string_equals("test_stdio_interactive", command_line)) {
             if (test_stdio_interactive()) {
                 puts("test_stdio_interactive passed");
