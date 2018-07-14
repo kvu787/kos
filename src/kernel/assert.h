@@ -1,8 +1,8 @@
 #ifndef ASSERT_H_
 #define ASSERT_H_
 
+#include "io.h"
 #include "types.h"
-#include "stdio.h"
 
 #define assert(expr) (__assert(expr, #expr, __FILE__, __LINE__, __func__))
 

@@ -1,5 +1,5 @@
-#ifndef CPU_H_
-#define CPU_H_
+#ifndef TIME_H_
+#define TIME_H_
 
 #include <stdint.h>
 
@@ -14,4 +14,4 @@ void spin(uint32_t milliseconds);
 // Assumes we're running on a BCM2835.
 uint32_t system_timer();
 
-#endif // CPU_H_
+#endif // TIME_H_

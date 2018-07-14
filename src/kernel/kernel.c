@@ -3,13 +3,13 @@
 
 #include "assert.h"
 #include "calc.h"
-#include "cpu.h"
+#include "io.h"
 #include "keyecho.h"
-#include "types.h"
 #include "math.h"
-#include "stdio.h"
 #include "string.h"
 #include "uart.h"
+#include "time.h"
+#include "types.h"
 
 #include "test/char_test.h"
 #include "test/cpu_test.h"

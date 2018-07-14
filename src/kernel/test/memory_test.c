@@ -1,9 +1,9 @@
 #include "memory_test.h"
 
 #include "../assert.h"
-#include "../types.h"
 #include "../memory.h"
 #include "../string.h"
+#include "../types.h"
 
 static void memory_equals_test(void);
 static void memory_set_test(void);

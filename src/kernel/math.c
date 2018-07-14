@@ -1,6 +1,6 @@
 #include "math.h"
 
-#include "stdio.h"
+#include "io.h"
 
 unsigned long get_num_digits(unsigned long ul) {
     if (ul == 0) {

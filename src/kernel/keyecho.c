@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 
-#include "stdio.h"
+#include "io.h"
 #include "vt100.h"
 
 void keyecho_main(void) {

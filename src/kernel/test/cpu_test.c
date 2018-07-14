@@ -2,8 +2,8 @@
 
 #include <stdint.h>
 
-#include "../cpu.h"
-#include "../stdio.h"
+#include "../io.h"
+#include "../time.h"
 
 bool test_cpu() {
     // wait about 100 ms

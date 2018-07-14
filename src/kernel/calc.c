@@ -3,8 +3,8 @@
 #include <stdbool.h>
 
 #include "char.h"
+#include "io.h"
 #include "math.h"
-#include "stdio.h"
 #include "vt100.h"
 
 // Evaluates an reverse polish notation expression, such as "2 11 + 17 5 * *".

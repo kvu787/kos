@@ -1,7 +1,7 @@
 #include "stdio_test.h"
 
+#include "../io.h"
 #include "../memory.h"
-#include "../stdio.h"
 
 static bool test_sscanf(void);
 static void test_stdio_output(void);

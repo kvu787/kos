@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 
-#include "stdio.h"
+#include "io.h"
 
 void panic(char *string) {
     printf(string);
