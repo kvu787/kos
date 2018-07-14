@@ -1,10 +1,12 @@
 #ifndef MATH_H_
 #define MATH_H_
 
-// Computes the number of digits used to represent ul in base 10.
-unsigned long get_num_digits(unsigned long ul);
+#include "types.h"
 
 // Computes the number of digits used to represent ul in base 10.
-unsigned long get_ith_digit(unsigned long ul, unsigned long i);
+uint_t get_num_digits(uint_t ul);
+
+// Computes the number of digits used to represent ul in base 10.
+uint_t get_ith_digit(uint_t ul, uint_t i);
 
 #endif // MATH_H_

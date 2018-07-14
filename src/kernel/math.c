@@ -1,12 +1,10 @@
 #include "math.h"
 
-#include "io.h"
-
-unsigned long get_num_digits(unsigned long ul) {
+uint_t get_num_digits(uint_t ul) {
     if (ul == 0) {
         return 1;
     }
-    unsigned long num_digits = 0;
+    uint_t num_digits = 0;
     while (ul) {
         ++num_digits;
         ul /= 10;
@@ -14,7 +12,7 @@ unsigned long get_num_digits(unsigned long ul) {
     return num_digits;
 }
 
-unsigned long get_ith_digit(unsigned long ul, unsigned long i) {
+uint_t get_ith_digit(uint_t ul, uint_t i) {
     while (i) {
         ul /= 10;
         --i;
