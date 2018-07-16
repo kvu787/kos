@@ -1,10 +1,12 @@
 #ifndef PANIC_H_
 #define PANIC_H_
 
+#include "types.h"
+
 // Print string and hang.
-void panic(char *string);
+void panic(char_t *string);
 
 // Hack to implement varg.h.
-int panic_with_return(char *string);
+int_t panic_with_return(char_t *string);
 
 #endif // PANIC_H_

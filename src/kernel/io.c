@@ -7,10 +7,10 @@
 #include "uart.h"
 #include "varg.h"
 
-static const int DOUBLE_PRECISION = 2;
+static const int_t DOUBLE_PRECISION = 2;
 
-int getchar(void) {
-    char c = getchar_silent();
+int_t getchar(void) {
+    char_t c = getchar_silent();
     if (c == '\r') {
         putchar('\r');
         putchar('\n');
@@ -20,11 +20,11 @@ int getchar(void) {
     return c;
 }
 
-int getchar_silent(void) {
+int_t getchar_silent(void) {
     return uart_getchar();
 }
 
-char *gets(char *str, uint_t n) {
+char_t *gets(char_t *str, uint_t n) {
     while (n > 0) {
         *str++ = getchar();
         --n;
@@ -33,11 +33,11 @@ char *gets(char *str, uint_t n) {
     return str;
 }
 
-char *getline(char *buffer, uint_t size) {
+char_t *getline(char_t *buffer, uint_t size) {
     --size;
     bool_t hasReceivedEnter = FALSE;
     while (size > 0 && !hasReceivedEnter) {
-        char c = getchar();
+        char_t c = getchar();
         if (c == '\r') {
             hasReceivedEnter = TRUE;
         } else {
@@ -53,12 +53,12 @@ char *getline(char *buffer, uint_t size) {
     }
 }
 
-int putchar(char ch) {
+int_t putchar(char_t ch) {
     uart_putchar(ch);
     return 0;
 }
 
-int puts(const char *str) {
+int_t puts(const char_t *str) {
     while (*str) {
         putchar(*str);
         ++str;
@@ -75,7 +75,7 @@ int puts(const char *str) {
 // 
 // Precondition: the character stream is not shorter than format
 // ^TODO: handle EOF properly
-static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) {
+static int_t vscanf(int_t (*getchar_f)(void), const char_t *format, varg_data_t args) {
     // invariants
     // 
     // format: advance as input is parsed
@@ -87,30 +87,30 @@ static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) 
     // < 0 if getchar_f must be used to get the next character
     //
     // return_value: set to -1 if there is an error
-    int c = -1;
-    int return_value = 0;
+    int_t c = -1;
+    int_t return_value = 0;
 
     while (*format) {
         if (c < 0) {
-            c = (char) getchar_f();
+            c = (char_t) getchar_f();
         }
         if (string_starts_with(format, "%u")) {
             // get digits
-            unsigned long u = 0;
+            uint_t u = 0;
             while (is_digit(c)) {
                 u *= 10;
                 u += c - '0';
-                c = (char) getchar_f();
+                c = (char_t) getchar_f();
             }
-            unsigned long *out_u = varg_next(args, unsigned long *);
+            uint_t *out_u = varg_next(args, uint_t *);
             *out_u = u;
             format += 2;
         } else if (string_starts_with(format, "%s")) {
-            char *string = varg_next(args, char *);
+            char_t *string = varg_next(args, char_t *);
             // get all [^\s\x0]
             while (is_printable(c)) {
                 *string++ = c;
-                c = (char) getchar_f();
+                c = (char_t) getchar_f();
             }
             *string = '\0';
             format += 2;
@@ -136,16 +136,16 @@ static int vscanf(int (*getchar_f)(void), const char *format, varg_data_t args) 
     return return_value;
 }
 
-int scanf(const char *format, ...) {
-    int (*getchar_f)(void) = &getchar;
+int_t scanf(const char_t *format, ...) {
+    int_t (*getchar_f)(void) = &getchar;
     varg_data_t args = varg_init(format);
-    int return_value = vscanf(getchar_f, format, args);
+    int_t return_value = vscanf(getchar_f, format, args);
     return return_value;
 }
 
-static const char *sgetchar_string;
+static const char_t *sgetchar_string;
 
-static int sgetchar(void) {
+static int_t sgetchar(void) {
     if (sgetchar_string) {
         return *sgetchar_string++;
     } else {
@@ -153,23 +153,23 @@ static int sgetchar(void) {
     }
 }
 
-// Returns a getchar function for the given string.
+// Returns a getchar_t function for the given string.
 // The string is stored in a global variable, because C doesn't closures which
 // could capture state local to the function that isn't already passed in
 // through arguments.
-static int (*generate_sgetchar(const char *string))(void) {
+static int_t (*generate_sgetchar(const char_t *string))(void) {
     sgetchar_string = string;
     return &sgetchar;
 }
 
-int sscanf(const char *str, const char *format, ...) {
-    int (*getchar_f)(void) = generate_sgetchar(str);
+int_t sscanf(const char_t *str, const char_t *format, ...) {
+    int_t (*getchar_f)(void) = generate_sgetchar(str);
     varg_data_t args = varg_init(format);
-    int return_value = vscanf(getchar_f, format, args);
+    int_t return_value = vscanf(getchar_f, format, args);
     return return_value;
 }
 
-int printf(const char *format, ...) {
+int_t printf(const char_t *format, ...) {
     varg_data_t args = varg_init(format);
     while (*format) {
         if (string_starts_with(format, "%d")) {
@@ -180,27 +180,27 @@ int printf(const char *format, ...) {
                 d = -d;
             }
             // Print whole part
-            unsigned long ul = (unsigned long) d;
+            uint_t ul = (uint_t) d;
             printf("%u", ul);
             // Print fractional part
             putchar('.');
             double fractional = d;
-            for (int i = 0; i < DOUBLE_PRECISION; ++i) {
-                fractional = fractional - ((unsigned long) fractional);
+            for (int_t i = 0; i < DOUBLE_PRECISION; ++i) {
+                fractional = fractional - ((uint_t) fractional);
                 fractional *= 10;
-                printf("%u", (unsigned long) fractional);
+                printf("%u", (uint_t) fractional);
             }
             format += 2;
         } else if (string_starts_with(format, "%u")) {
-            unsigned long ul = varg_next(args, unsigned long);
-            for (unsigned long i = get_num_digits(ul); i > 0; --i) {
-                unsigned long digit = get_ith_digit(ul, i - 1);
-                char c = ((char) digit) + '0';
+            uint_t ul = varg_next(args, uint_t);
+            for (uint_t i = get_num_digits(ul); i > 0; --i) {
+                uint_t digit = get_ith_digit(ul, i - 1);
+                char_t c = ((char_t) digit) + '0';
                 putchar(c);
             }
             format += 2;
         } else if (string_starts_with(format, "%s")) {
-            char *string = varg_next(args, char *);
+            char_t *string = varg_next(args, char_t *);
             while (*string) {
                 putchar(*string++);
             }

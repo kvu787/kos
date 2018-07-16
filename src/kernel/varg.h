@@ -1,7 +1,7 @@
 #ifndef VARG_H_
 #define VARG_H_
 
-#include "panic.h"
+#include "types.h"
 
 /*
 When "..." is specified, the compiler pushes arguments from registers 
@@ -11,7 +11,7 @@ information.
 
 This example shows how arguments move from registers onto a stack: 
 
-    Declaration: varg_function(int a, char *s, char c, ...)
+    Declaration: varg_function(int_t a, char_t *s, char_t c, ...)
     Call: varg_function(1, "hello", 'w', var0, var1, var2)
     Arguments in registers and stack:
         r0:    1
@@ -33,13 +33,13 @@ typedef unsigned varg_data_t;
 // varg_start must be called before calling varg_next.
 // arg is the name of the argument before the ...
 #define varg_init(arg) \
-    ((unsigned) (((char *) &arg) + __sizeof_align4(arg)))
+    ((unsigned) (((char_t *) &arg) + __sizeof_align4(arg)))
 
 // varg_next accesses the next variadic argument.
 // The type of the argument must be specified.
 #define varg_next(varg_data, type) \
     (*((type *) __varg_next(&varg_data, __sizeof_align4(type), #type)))
 
-void *__varg_next(varg_data_t *p_varg_data, int size, char *type_name);
+void *__varg_next(varg_data_t *p_varg_data, int_t size, char_t *type_name);
 
 #endif // VARG_H_

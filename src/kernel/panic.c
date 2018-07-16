@@ -1,15 +1,14 @@
 #include "panic.h"
 
 #include "io.h"
-#include "types.h"
 
-void panic(char *string) {
+void panic(char_t *string) {
     printf(string);
     while (TRUE) {
     }
 }
 
-int panic_with_return(char *string) {
+int_t panic_with_return(char_t *string) {
     panic(string);
     return 0;
 }

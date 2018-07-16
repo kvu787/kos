@@ -23,10 +23,10 @@ bool_t test_stdio_interactive(void) {
 }
 
 static bool_t test_sscanf(void) {
-    char string1[10];
-    char string2[10];
-    unsigned long u1;
-    unsigned long u2;
+    char_t string1[10];
+    char_t string2[10];
+    uint_t u1;
+    uint_t u2;
 
     memory_set(string1, 10, 1);
     memory_set(string2, 10, 1);
@@ -138,7 +138,7 @@ static bool_t test_sscanf(void) {
 static bool_t test_stdio_input() {
     puts("* Test getchar");
     puts("Press the ! key. You should see it echoed back.");
-    char c = getchar();
+    char_t c = getchar();
     puts("");
     if (c != '!') {
         puts("fail: Received wrong character");
@@ -148,7 +148,7 @@ static bool_t test_stdio_input() {
 
     puts("* Test gets");
     puts("Type hello. You should see it echoed back.");
-    char string[6];
+    char_t string[6];
     gets(string, 5);
     puts("");
     if (!memory_equals(string, "hello\0", 6)) {
@@ -158,10 +158,10 @@ static bool_t test_stdio_input() {
 
     puts("* Test scanf");
 
-    char string1[10];
-    char string2[10];
-    unsigned long u1;
-    unsigned long u2;
+    char_t string1[10];
+    char_t string2[10];
+    uint_t u1;
+    uint_t u2;
 
     puts("Type hello 1 world 2 and press ENTER. You should see it echoed back.");
     memory_set(string1, 10, 1);

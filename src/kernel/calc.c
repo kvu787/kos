@@ -7,7 +7,7 @@
 #include "vt100.h"
 
 // Evaluates an reverse polish notation expression, such as "2 11 + 17 5 * *".
-static unsigned long rpn(char *expression);
+static uint_t rpn(char_t *expression);
 
 #define COMMAND_LINE_SIZE 200
 
@@ -15,7 +15,7 @@ void calc_main(void) {
     while (TRUE) {
         while (TRUE) {
             puts("Press ENTER to continue or ESC to exit.");
-            char c = getchar_silent();
+            char_t c = getchar_silent();
             if (c == KEY_ENTER) {
                 break;
             } else if (c == KEY_ESCAPE) {
@@ -25,19 +25,19 @@ void calc_main(void) {
             }
         }
         puts("Type a reverse polish notation expression and press ENTER to evaluate it.");
-        char command_line[COMMAND_LINE_SIZE];
+        char_t command_line[COMMAND_LINE_SIZE];
         if (getline(command_line, COMMAND_LINE_SIZE) == NULL) {
             printf("\r\nCommand too long. Max size is %u\r\n", COMMAND_LINE_SIZE-1);
             continue;
         }
-        unsigned long result = rpn(command_line);
+        uint_t result = rpn(command_line);
         printf("%u\r\n", result);
     }
 }
 
-static unsigned long rpn(char *expression) {
-    static unsigned long buffer[100];
-    unsigned long *stack = &buffer[0];
+static uint_t rpn(char_t *expression) {
+    static uint_t buffer[100];
+    uint_t *stack = &buffer[0];
 
     // This loop does tokenization and evaluation in a single pass.
     // There's not really any parsing, because rpn is structured so that
@@ -48,7 +48,7 @@ static unsigned long rpn(char *expression) {
     // Each iteration handles a token, which is one of:
     // spaces, operators, integers, \0
     while (TRUE) {
-        char c = *expression;
+        char_t c = *expression;
         if (is_whitespace(c)) {
             while (is_whitespace(*expression)) {
                 ++expression;
@@ -63,10 +63,10 @@ static unsigned long rpn(char *expression) {
             ++stack;
             ++expression;
         } else if (is_digit(c)) {
-            unsigned long n;
+            uint_t n;
             sscanf(expression, "%u", &n);
             *stack++ = n;
-            unsigned long num_digits = get_num_digits(n);
+            uint_t num_digits = get_num_digits(n);
             expression += num_digits;
         } else if (c == '\0') {
             break;

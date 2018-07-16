@@ -46,7 +46,7 @@ void kernel_main(void) {
     // Start shell
     while (TRUE) {
         printf("> ");
-        char command_line[COMMAND_LINE_SIZE];
+        char_t command_line[COMMAND_LINE_SIZE];
         if (getline(command_line, COMMAND_LINE_SIZE) == NULL) {
             printf("\r\nCommand too long. Max size is %u\r\n.", COMMAND_LINE_SIZE-1);
             continue;

@@ -6,41 +6,41 @@
 // >= 0 on success
 // = -1 on EOF
 // < -1 on error
-int getchar(void);
+int_t getchar(void);
 
 // >= 0 on success
 // = -1 on EOF
 // < -1 on error
-int getchar_silent(void);
+int_t getchar_silent(void);
 
 // NULL on error
-char *gets(char *str, uint_t n);
+char_t *gets(char_t *str, uint_t n);
 
 // Reads up to (size - 1) characters of user input until ENTER is sent.
 // size = size of buffer
 // Returns
 //   buffer
 //   Or NULL if user input exceeds buffer size.
-char *getline(char *buffer, uint_t size);
+char_t *getline(char_t *buffer, uint_t size);
 
 // >= 0 on success
 // < 0 on error
-int putchar(char ch);
+int_t putchar(char_t ch);
 
 // >= 0 on success
 // < 0 on error
-int puts(const char *str);
+int_t puts(const char_t *str);
 
 // >= 0 on success
 // -1 if format does not match input
-int scanf(const char *format, ...);
+int_t scanf(const char_t *format, ...);
 
 // >= 0 on success
 // -1 if format does not match input
-int sscanf(const char *str, const char *format, ...);
+int_t sscanf(const char_t *str, const char_t *format, ...);
 
 // >= 0 on success
 // < 0 on error
-int printf(const char *format, ...);
+int_t printf(const char_t *format, ...);
 
 #endif // STDIO_H_

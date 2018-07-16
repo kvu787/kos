@@ -6,9 +6,9 @@
 extern uint_t entropy;
 
 // Blocks until a byte is received from the UART.
-char uart_getchar(void);
+char_t uart_getchar(void);
 
 // Transmit a byte through the UART.
-void uart_putchar(char ch);
+void uart_putchar(char_t ch);
 
 #endif // UART_H_

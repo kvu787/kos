@@ -12,7 +12,7 @@ static double double8b = 2.1728;
 #define _check(type, expected) \
     if (varg_next(varg_data, type) != expected) { return FALSE; }
 
-static bool_t numeric_4_byte_function(int a, char b, ...) {
+static bool_t numeric_4_byte_function(int_t a, char_t b, ...) {
     if (a != 0) {
         return FALSE;
     }
@@ -39,7 +39,7 @@ static bool_t numeric_4_byte_test(void) {
         0, 1, 2, 3, var1b, 4, 5, var2b, 6, 7, var4b, 8, 9);
 }
 
-static bool_t numeric_8_byte_function(int a, char b, ...) {
+static bool_t numeric_8_byte_function(int_t a, char_t b, ...) {
     if (a != 0) {
         return FALSE;
     }

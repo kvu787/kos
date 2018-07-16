@@ -9,7 +9,7 @@ void keyecho_main(void) {
     puts("Press ESC twice to exit.");
     bool_t wasLastCharacterEsc = FALSE;
     while (TRUE) {
-        char c = getchar_silent();
+        char_t c = getchar_silent();
         if (c == KEY_ESCAPE) {
             if (wasLastCharacterEsc) {
                 return;
