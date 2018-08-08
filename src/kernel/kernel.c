@@ -3,10 +3,11 @@
 #include "io.h"
 #include "keyecho.h"
 #include "math.h"
+#include "snake.h"
 #include "string.h"
-#include "uart.h"
 #include "time.h"
 #include "types.h"
+#include "uart.h"
 
 #include "test/char_test.h"
 #include "test/cpu_test.h"
@@ -58,6 +59,7 @@ void kernel_main(void) {
                 "  help\r\n"
                 "  keyecho\r\n"
                 "  random\r\n"
+                "  snake\r\n"
                 "  test_stdio_interactive\r\n");
         } else if (string_equals("calc", command_line)) {
             calc_main();
@@ -65,6 +67,8 @@ void kernel_main(void) {
             keyecho_main();
         } else if (string_equals("random", command_line)) {
             printf("%u\r\n", random());
+        } else if (string_equals("snake", command_line)) {
+            snake_main();
         } else if (string_equals("test_stdio_interactive", command_line)) {
             if (test_stdio_interactive()) {
                 puts("test_stdio_interactive passed");

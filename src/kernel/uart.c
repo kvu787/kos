@@ -29,9 +29,17 @@ char_t uart_getchar(void) {
     return *AUX_MU_IO_REG & 0xff;
 }
 
+int_t uart_try_getchar(void) {
+    if (*AUX_MU_LSR_REG & 1) {
+        return *AUX_MU_IO_REG & 0xff;
+    } else {
+        return -1;
+    }
+}
+
 void uart_putchar(char_t ch) {
     // Wait until transmit FIFO is idle and empty
-    while (((*AUX_MU_LSR_REG) & 0x60) != 0x60) {
+    while ((*AUX_MU_LSR_REG & 0x60) != 0x60) {
     }
     *AUX_MU_IO_REG = ch;
 }

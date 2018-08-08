@@ -24,6 +24,15 @@ int_t getchar_silent(void) {
     return uart_getchar();
 }
 
+int_t try_getchar_silent(void) {
+    int_t i = uart_try_getchar();
+    if (i == -1) {
+        return -2;
+    } else {
+        return i;
+    }
+}
+
 char_t *gets(char_t *str, uint_t n) {
     while (n > 0) {
         *str++ = getchar();

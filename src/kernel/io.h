@@ -13,6 +13,12 @@ int_t getchar(void);
 // < -1 on error
 int_t getchar_silent(void);
 
+// >= 0 on success
+// = -1 on EOF
+// = -2 if no character available
+// < -2 on error
+int_t try_getchar_silent(void);
+
 // NULL on error
 char_t *gets(char_t *str, uint_t n);
 
