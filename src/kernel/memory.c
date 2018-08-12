@@ -18,3 +18,12 @@ void memory_set(void *start, uint_t size, byte_t value) {
         --size;
     }
 }
+
+void memory_copy(void *src, void *dst, uint_t size) {
+    byte_t *srcb = (byte_t *) src;
+    byte_t *dstb = (byte_t *) dst;
+    while (size > 0) {
+        *dstb++ = *srcb++;
+        --size;
+    }
+}
