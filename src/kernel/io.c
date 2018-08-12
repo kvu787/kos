@@ -44,14 +44,26 @@ char_t *gets(char_t *str, uint_t n) {
 
 char_t *getline(char_t *buffer, uint_t size) {
     --size;
+    uint_t original_size = size;
     bool_t hasReceivedEnter = FALSE;
     while (size > 0 && !hasReceivedEnter) {
-        char_t c = getchar();
+        char_t c = getchar_silent();
         if (c == '\r') {
             hasReceivedEnter = TRUE;
+            putchar('\r');
+            putchar('\n');
+        } else if (c == '\b') {
+            if (size < original_size) {
+                --buffer;
+                ++size;
+                putchar('\b');
+                putchar(' ');
+                putchar('\b');
+            }
         } else {
             *buffer++ = c;
             --size;
+            putchar(c);
         }
     }
     if (!hasReceivedEnter && getchar() != '\r') {
