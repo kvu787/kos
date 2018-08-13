@@ -1,8 +1,9 @@
 #ifndef VT100_H_
 #define VT100_H_
 
-// This defines the mapping of keys to keycodes for the VT100, which many
-// modern terminals emulate.
+// This defines the mapping of keycodes to keys and control sequences to their
+// effects. Most are part of the ANSI terminal standard. They work with Tera
+// Term, and probably many other terminal emulators too.
 
 #define KEY_ESCAPE 27
 #define KEY_ENTER 13
