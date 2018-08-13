@@ -3,9 +3,9 @@
 #include "io.h"
 #include "math.h"
 #include "string.h"
+#include "terminal.h"
 #include "time.h"
 #include "types.h"
-#include "vt100.h"
 
 // 10 FPS
 #define FRAME_DURATION_USECS 100000

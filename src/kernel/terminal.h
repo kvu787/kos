@@ -1,5 +1,5 @@
-#ifndef VT100_H_
-#define VT100_H_
+#ifndef TERMINAL_H_
+#define TERMINAL_H_
 
 // This defines the mapping of keycodes to keys and control sequences to their
 // effects. Most are part of the ANSI terminal standard. They work with Tera
@@ -20,4 +20,4 @@
 #define CTRL_HIDE_CURSOR "\x1b[?25l"
 #define CTRL_SHOW_CURSOR "\x1b[?25h"
 
-#endif // VT100_H_
+#endif // TERMINAL_H_

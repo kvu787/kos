@@ -3,8 +3,8 @@
 #include "char.h"
 #include "io.h"
 #include "math.h"
+#include "terminal.h"
 #include "types.h"
-#include "vt100.h"
 
 // Evaluates an reverse polish notation expression, such as "2 11 + 17 5 * *".
 static uint_t rpn(char_t *expression);

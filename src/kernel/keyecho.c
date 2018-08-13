@@ -1,8 +1,8 @@
 #include "keyecho.h"
 
 #include "io.h"
+#include "terminal.h"
 #include "types.h"
-#include "vt100.h"
 
 void keyecho_main(void) {
     puts("Press any key. The keycode(s) that it generates will be shown.");
